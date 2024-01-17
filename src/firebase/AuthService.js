@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged  } from "firebase/auth";
 import conf from '../conf/conf';
 
 class AuthService{
@@ -13,7 +13,7 @@ class AuthService{
             const user = await createUserWithEmailAndPassword(this.auth, email, password)
             if(user){
                 console.log(email, password);
-                // const signinUser = await this.signInUser({email, password});
+                const signinUser = await this.signInUser({email, password});
                 // console.log("signinUser  ",signinUser.user);
 
                 console.log("current user ", this.auth);
@@ -52,5 +52,18 @@ class AuthService{
     
 }
 const auth = new AuthService();
+
+onAuthStateChanged(auth.auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/auth.user
+      console.log("onAuthStateChanged user ", user);
+      
+    } else {
+      // User is signed out
+      console.log("onAuthStateChanged user signed out ");
+    }
+  });
+
 export default auth;
 export {AuthService}
