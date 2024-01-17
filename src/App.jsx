@@ -3,13 +3,16 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import SignupForm from './components/SignupForm'
+import AddArticle from './components/AddArticle'
+import AllArticles from './components/AllArticles'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <SignupForm />
+      {/* <SignupForm /> */}
+      <AddArticle />
+      {/* <AllArticles /> */}
     </>
   )
 }
