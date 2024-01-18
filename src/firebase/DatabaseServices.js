@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDoc, getDocs, doc, setDoc} from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs, doc, setDoc, deleteDoc} from "firebase/firestore";
 import conf from '../conf/conf';
 
 class DatabaseServices {
@@ -10,25 +10,35 @@ class DatabaseServices {
 
     async addArticle(article) {
         try {
-
             const articlesRef = doc(collection(this.db, "articles"));
             await setDoc(articlesRef, article);
-
-
+            return true;
         } catch (e) {
             console.error("Error add document: ", e);
+            return false;
         }
     }
 
     async updateArticle(docId, article){
         try {
             const articleDocRef = doc(this.db, "articles", docId);
-            const updatedDocument = await setDoc(articleDocRef, article);
-            console.log(updatedDocument);
-
-            console.log(updatedDoc);
+            await setDoc(articleDocRef, article);
+            return true;
         } catch (error) {
-            console.error("Error update document: ", e);
+            console.error("Error update document: ", error);
+            return false;
+        }
+    }
+
+    async deleteArticle(docId){
+        try {
+            const articleDocRef = doc(this.db, "articles", docId);
+            const deleteDocRes =  await deleteDoc(articleDocRef);
+            console.log("deleteDocRes =>", deleteDocRes);
+            return true;
+        } catch (error) {
+            console.error("Error delete document: ", error);
+            return false;
         }
     }
 

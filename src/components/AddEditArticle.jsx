@@ -1,25 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dbService from "../firebase/DatabaseServices";
+import DataLoader from "./DataLoader";
 function AddEditArticle({getSetArticleData, editArticle = null, setEditArticle}) {
-    const [title, setTitle] = useState(editArticle ? editArticle.title : '');
-    const [content, setContent] = useState(editArticle ? editArticle.content : '');
+    const [title, setTitle] = useState(editArticle?.title || '');
+    const [content, setContent] = useState(editArticle?.content || '' );
+    const [dataLoader, setDataLoader] = useState(false);
 
     const handleSubmit = async (e) => {
+      setDataLoader(true);
         e.preventDefault();
         if(!editArticle){
 
-          const data = await dbService
+          const addArticleRes = await dbService
             .addArticle({title, content});
-            console.log("Add articles response ",data);
+            if(addArticleRes){
+
+              setTitle('');
+               setContent('');
+            }
         }else{
-          const data = await dbService
+          const updateArticleRes = await dbService
           .updateArticle(editArticle.id, {title, content});
-          console.log("update articles response ",data);
+          console.log("update articles response ",updateArticleRes);
+          if(updateArticleRes){
+            setEditArticle(null)
+          }
         }
+        setDataLoader(false)
         getSetArticleData();
 
       };
 
+      useEffect(() => {
+        if(editArticle){
+          setTitle(editArticle.title);
+          setContent(editArticle?.content);
+        }else{
+          setTitle('');
+          setContent('');
+        }
+      },[editArticle])
 
 
     return (<>
@@ -30,7 +50,7 @@ function AddEditArticle({getSetArticleData, editArticle = null, setEditArticle})
             <h2 className="text-center text-2xl font-bold leading-tight text-black dark:text-white">
               Add Article
             </h2>
-           
+
             <form onSubmit={handleSubmit} className="mt-8">
               <div className="space-y-5">
                 <div>
@@ -73,9 +93,15 @@ function AddEditArticle({getSetArticleData, editArticle = null, setEditArticle})
                 <div>
                   <button
                     type="submit"
-                    className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80 dark:text-white"
+                    className="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+                    disabled={dataLoader}
                   >
-                    Add Article
+                    {
+                      dataLoader ? 
+                      <DataLoader button light/>
+                      :
+                      editArticle ? "Update Article" : "Add Article"
+                    }
                     
                   </button>
                 </div>
