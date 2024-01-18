@@ -1,20 +1,30 @@
 import { useState } from "react";
 import dbService from "../firebase/DatabaseServices";
-function AddArticle() {
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
+function AddEditArticle({getSetArticleData, editArticle = null, setEditArticle}) {
+    const [title, setTitle] = useState(editArticle ? editArticle.title : '');
+    const [content, setContent] = useState(editArticle ? editArticle.content : '');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        dbService
-          .addArticle({title, content})
+        if(!editArticle){
+
+          const data = await dbService
+            .addArticle({title, content});
+            console.log("Add articles response ",data);
+        }else{
+          const data = await dbService
+          .updateArticle(editArticle.id, {title, content});
+          console.log("update articles response ",data);
+        }
+        getSetArticleData();
+
       };
 
 
 
     return (<>
         <section>
-        <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24 bg-white dark:bg-black min-h-lvh">
+        <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24 bg-white dark:bg-black ">
           <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
            
             <h2 className="text-center text-2xl font-bold leading-tight text-black dark:text-white">
@@ -78,4 +88,4 @@ function AddArticle() {
     </>);
 }
 
-export default AddArticle;
+export default AddEditArticle;

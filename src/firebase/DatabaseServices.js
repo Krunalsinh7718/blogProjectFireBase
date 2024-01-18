@@ -16,7 +16,19 @@ class DatabaseServices {
 
 
         } catch (e) {
-            console.error("Error adding document: ", e);
+            console.error("Error add document: ", e);
+        }
+    }
+
+    async updateArticle(docId, article){
+        try {
+            const articleDocRef = doc(this.db, "articles", docId);
+            const updatedDocument = await setDoc(articleDocRef, article);
+            console.log(updatedDocument);
+
+            console.log(updatedDoc);
+        } catch (error) {
+            console.error("Error update document: ", e);
         }
     }
 
@@ -25,12 +37,12 @@ class DatabaseServices {
             let data = [];
             const querySnapshot = await getDocs(collection(this.db, "articles"));
             querySnapshot.forEach((doc) => {
-                console.log(`${doc.id} => ${doc.data()}`);
+                // console.log(`${doc.id} => ${doc.data()}`);
                 data.push({...doc.data(), id : doc.id});
             });
             return data;
         } catch (e) {
-            console.error("Error reading document: ", e);
+            console.error("Error read document: ", e);
             return false;
         }
     }
