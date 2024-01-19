@@ -6,6 +6,7 @@ import SignupForm from './components/SignupForm'
 import AddArticle from './components/AddEditArticle'
 import AllArticles from './components/AllArticles'
 import Articles from './pages/Articles'
+import UploadImage from './pages/UploadImage'
 
 function App() {
 
@@ -14,7 +15,8 @@ function App() {
       {/* <SignupForm /> */}
       {/* <AddArticle /> */}
       {/* <AllArticles /> */}
-      <Articles />
+      {/* <Articles /> */}
+      <UploadImage />
     </>
   )
 }
