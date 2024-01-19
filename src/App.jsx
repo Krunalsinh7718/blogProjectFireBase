@@ -12,11 +12,11 @@ function App() {
 
   return (
     <>
-      {/* <SignupForm /> */}
+      <SignupForm />
       {/* <AddArticle /> */}
       {/* <AllArticles /> */}
       {/* <Articles /> */}
-      <UploadImage />
+      {/* <UploadImage /> */}
     </>
   )
 }

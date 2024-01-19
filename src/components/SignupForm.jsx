@@ -1,44 +1,74 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import auth from "../firebase/AuthService";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import Input from "./Input";
+import DataLoader from "./DataLoader";
+import Button from "./Button";
+import { useDispatch } from "react-redux";
+import { login } from "../store/authSlice";
+import { toast } from "react-toastify";
 
 function SignupForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    auth
-      .registerUser({ email: email, password: password })
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log("auth", auth.auth);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log("errorCode " + errorCode, " errorMessage" + errorMessage);
-      });
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   auth
+  //     .registerUser({ email: email, password: password })
+  //     .then((userCredential) => {
+  //       // Signed in
+  //       const user = userCredential.user;
+  //       console.log("auth", auth.auth);
+  //     })
+  //     .catch((error) => {
+  //       const errorCode = error.code;
+  //       const errorMessage = error.message;
+  //       console.log("errorCode " + errorCode, " errorMessage" + errorMessage);
+  //     });
+  // };
+
+  // const handleLogout = () => {
+  //   auth.logout().then(() => {
+  //     console.log("logout check auth", auth.auth);
+  //   });
+  // };
+
+  // const handleCheckAuth = () => {
+  //   console.log("just check auth ", auth.auth);
+  // };
+
+  {
+    /* -------------------------------------- */
+  }
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
+  const [dataLoading, setDataLoading] = useState();
+  const dispatch = useDispatch();
+
+  const handleSignup = async (data) => {
+    setDataLoading(true);
+    try {
+      const userCredential = await auth.registerUser(data);
+
+      if(userCredential){
+        toast.success("Account created and login successfully.");
+        dispatch(login(userCredential.user));
+        setDataLoading(false);
+      }
+    } catch (error) {
+      setDataLoading(false);
+      console.error("Error handle signup: ", error);
+    }
   };
-
-  const handleLogout = () => {
-    auth.logout().then(() => {
-      console.log("logout check auth", auth.auth);
-    });
-  };
-
-  const handleCheckAuth = () => {
-    console.log("just check auth ", auth.auth);
-  };
-
-
 
   return (
     <>
-      
-
-     
-      <section>
+      {/* <section>
         <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24 bg-white dark:bg-black min-h-lvh">
           <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
             <div className="mb-2 flex justify-center">
@@ -91,7 +121,6 @@ function SignupForm() {
                   <div className="flex items-center justify-between">
                     <label
                       htmlFor="password"
-                      
                       className="text-base font-medium text-gray-900 dark:text-white"
                     >
                       Password
@@ -108,7 +137,10 @@ function SignupForm() {
                     />
                   </div>
                 </div>
-                <div> {email}|{password}</div>
+                <div>
+                  {" "}
+                  {email}|{password}
+                </div>
                 <div>
                   <button
                     type="submit"
@@ -170,13 +202,81 @@ function SignupForm() {
                 Sign up with Facebook
               </button>
               <div>
-              <button className="dark:text-white mr-2" onClick={handleLogout}>logout</button> |
-                <button className="dark:text-white" onClick={handleCheckAuth}>check auth</button>
+                <button className="dark:text-white mr-2" onClick={handleLogout}>
+                  logout
+                </button>{" "}
+                |
+                <button className="dark:text-white" onClick={handleCheckAuth}>
+                  check auth
+                </button>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
+      {/* -------------------------------------- */}
+      <form onSubmit={handleSubmit(handleSignup)}>
+        <div className="space-y-5">
+          <div>
+            <Input
+              label="Email"
+              type="email"
+              {...register("email", {
+                required: "This is required",
+                maxLength: {
+                  value: 20,
+                  message: "Maximum length of name is 30.",
+                },
+              })}
+            />
+            <div className="text-red-600">
+              <ErrorMessage errors={errors} name="name" />
+            </div>
+          </div>
+          <div>
+            <Input
+              label="Password"
+              type="password"
+              {...register("password", {
+                required: "This is required",
+                maxLength: {
+                  value: 20,
+                  message: "Maximum length of name is 30.",
+                },
+              })}
+            />
+            <div className="text-red-600">
+              <ErrorMessage errors={errors} name="name" />
+            </div>
+          </div>
+          <Button
+            type="submit"
+            className="h-14 h-14 inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
+            disabled={dataLoading}
+          >
+            {!dataLoading ? (
+              <>
+                Create Account
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width={16}
+                  height={16}
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </>
+            ) : (
+              <DataLoader button light />
+            )}
+          </Button>
+        </div>
+      </form>
     </>
   );
 }
