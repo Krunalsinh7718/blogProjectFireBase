@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject   } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, getMetadata    } from "firebase/storage";
 import conf from '../conf/conf';
 
 class StorageServices {
@@ -25,21 +25,23 @@ class StorageServices {
         }
     }
 
-    async getDownloadURL(imgSnapRef){
+    async deleteFile(fileSnapURL){
+        const fileData = await getMetadata(fileSnapURL);
         try {
-            const desertRef = ref(storage, path);
+            const desertRef = ref(this.storage, fileData.fullPath);
 
             const deleteFileRes = deleteObject(desertRef)
 
             console.log(" deleteFileRes :", deleteFileRes);
+
+            return deleteFileRes;
         } catch (error) {
             console.error("Error delete file: ", error);
             return false;
         }
     }
 
-
-    async deleteFile(path){
+    async getDownloadURL(imgSnapRef){
         try {
             const imageDownloadURL = await getDownloadURL(imgSnapRef);
             return imageDownloadURL;
