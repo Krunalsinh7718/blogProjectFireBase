@@ -21,6 +21,10 @@ function UploadImage() {
         const imageURL = await storageService.getDownloadURL(imageSnapRef);
         setImageDownloadURL(imageURL)
     }
+
+    const handleDeletefile = async () => {
+        const imageURL = await storageService.deleteFile(imageSnapRef);
+    }
     return (<><div className="bg-white dark:bg-black min-h-lvh">
         <section>
             <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24 bg-white dark:bg-black ">
@@ -78,7 +82,13 @@ function UploadImage() {
                         imageDownloadURL && <img src={imageDownloadURL} alt="test image" />
                     }
 
+<button
+                        className="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+                        onClick={handleDeletefile}
+                    >
+                        delete file
 
+                    </button>
                 </div>
             </div>
         </section>
