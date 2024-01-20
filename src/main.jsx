@@ -4,10 +4,11 @@ import App from './App.jsx'
 import './index.css'
 import { Provider } from 'react-redux'
 import store from './store/store.js'
-import { createBrowserRouter } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Home from './pages/Home.jsx'
 import SignUp from './pages/Signup.jsx'
 import AuthLayout from './components/AuthLayout.jsx'
+import SignIn from './pages/SignIn.jsx'
 
 const routes = createBrowserRouter([
   {
@@ -19,8 +20,12 @@ const routes = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "",
+        path: "/signup",
         element: <AuthLayout authentication={false}><SignUp /></AuthLayout>
+      },
+      {
+        path: "/signin",
+        element: <AuthLayout authentication={false}><SignIn /></AuthLayout>
       }
     ]
   }
@@ -28,8 +33,9 @@ const routes = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
+      <RouterProvider router={routes}/>
 
-      <App />
+
     </Provider>
   </React.StrictMode>,
 )

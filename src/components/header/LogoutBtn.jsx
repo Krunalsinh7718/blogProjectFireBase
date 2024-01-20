@@ -1,18 +1,17 @@
 import { useDispatch } from "react-redux";
-import authService from "../../appwrite/auth";
 import { logout } from "../../store/authSlice";
 import { useNavigate } from "react-router-dom";
+import auth from "../../firebase/AuthService";
 
 function LogoutBtn() {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    authService.logout()
+    auth.logout()
     .then( () => {
       dispatch(logout());
-      navigate("/login")
+      navigate("/signin")
 
     })
     .catch(error => console.log("error >> logoutButton >> authServiceLogout : ", error))

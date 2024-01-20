@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -9,19 +9,30 @@ import Articles from './pages/Articles'
 import UploadImage from './pages/UploadImage'
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "./store/authSlice";
+import { Outlet, useLocation } from 'react-router-dom'
+import auth from './firebase/AuthService'
+import Header from './components/header/Header'
 
 
 function App() {
   const authStatus = useSelector((state) => state.auth.status);
   const dispatch = useDispatch();
   const location = useLocation();
+
+  useEffect(() => {
+    const currentUser = auth.currentUser;
+    
+    if(currentUser){
+      dispatch(login(currentUser));
+    }else{
+      dispatch(logout());
+    }
+    
+  },[])
   return (
     <>
-      <SignupForm />
-      {/* <AddArticle /> */}
-      {/* <AllArticles /> */}
-      {/* <Articles /> */}
-      {/* <UploadImage /> */}
+    <Header />
+    <Outlet />
     </>
   )
 }
