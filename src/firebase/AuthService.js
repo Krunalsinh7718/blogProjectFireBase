@@ -60,7 +60,7 @@ class AuthService {
                 // The signed-in user info.
                 const user = result.user;
                 // IdP data available using getAdditionalUserInfo(result)
-                console.log("login with google >> cred :", credential,">>, token :", token,", user : ", user);
+                console.log("login with google >> cred :", credential, ">>, token :", token, ", user : ", user);
             }).catch((error) => {
                 // Handle Errors here.
                 const errorCode = error.code;
@@ -69,7 +69,7 @@ class AuthService {
                 const email = error.customData.email;
                 // The AuthCredential type that was used.
                 const credential = GoogleAuthProvider.credentialFromError(error);
-               console.log("login with google >> error code : ", errorCode,", errorMessage : ",errorMessage,", email : ", email,", cred :", credential);
+                console.log("login with google >> error code : ", errorCode, ", errorMessage : ", errorMessage, ", email : ", email, ", cred :", credential);
             });
 
     }
