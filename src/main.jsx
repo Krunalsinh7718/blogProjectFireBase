@@ -11,6 +11,7 @@ import AuthLayout from './components/AuthLayout.jsx'
 import SignIn from './pages/SignIn.jsx'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AddPost from './pages/AddPost.jsx'
 
 const routes = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const routes = createBrowserRouter([
       {
         path: "/signin",
         element: <AuthLayout authentication={false}><SignIn /></AuthLayout>
+      },
+      {
+        path: "/add-post",
+        element: <AuthLayout authentication={true}><AddPost /></AuthLayout>
       }
     ]
   }

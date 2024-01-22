@@ -4,7 +4,8 @@ const conf = {
     projectId: String(import.meta.env.VITE_FIREBASE_PROJECT_ID),
     storageBucket: String(import.meta.env.VITE_FIREBASE_STORAGE_BUCKET),
     messagingSenderId: String(import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID),
-    appId: String(import.meta.env.VITE_FIREBASE_APP_ID)
+    appId: String(import.meta.env.VITE_FIREBASE_APP_ID),
+    tinymiceApiKey : String(import.meta.env.VITE_TINYMCE_API_KEY)
 }
 
 export default conf;
