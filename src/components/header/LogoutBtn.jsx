@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../store/authSlice";
 import { useNavigate } from "react-router-dom";
 import auth from "../../firebase/AuthService";
+import { toast } from "react-toastify";
 
 function LogoutBtn() {
   const dispatch = useDispatch();
@@ -10,6 +11,7 @@ function LogoutBtn() {
   const handleLogout = () => {
     auth.logout()
     .then( () => {
+      toast.success("Logout successfully.");
       dispatch(logout());
       navigate("/signin")
 

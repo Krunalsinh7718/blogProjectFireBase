@@ -25,7 +25,7 @@ function SigninForm() {
       const userCredential = await auth.signInUser(data);
 
       if(userCredential){
-        toast.success("Account created and login successfully.");
+        toast.success("login successfully.");
         dispatch(login(userCredential.user));
         setDataLoading(false);
       }
@@ -79,7 +79,7 @@ function SigninForm() {
           >
             {!dataLoading ? (
               <>
-                Create Account
+                Sign In
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width={16}
