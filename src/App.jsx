@@ -16,7 +16,6 @@ import { onAuthStateChanged } from 'firebase/auth'
 
 
 function App() {
-  const authStatus = useSelector((state) => state.auth.status);
   const dispatch = useDispatch();
   const location = useLocation();
 
