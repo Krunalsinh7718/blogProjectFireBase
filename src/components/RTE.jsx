@@ -9,7 +9,6 @@ function RTE({
     defaultValue = "" ,
     ...props
 }) {
-    const editorRef = useRef(null);
 
     return ( <>
         <div className="w-full">

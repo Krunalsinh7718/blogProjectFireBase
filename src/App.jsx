@@ -12,6 +12,7 @@ import { login, logout } from "./store/authSlice";
 import { Outlet, useLocation } from 'react-router-dom'
 import auth from './firebase/AuthService'
 import Header from './components/header/Header'
+import { onAuthStateChanged } from 'firebase/auth'
 
 
 function App() {
@@ -20,14 +21,14 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    const currentUser = auth.currentUser;
-    
-    if(currentUser){
-      dispatch(login(currentUser));
-    }else{
-      dispatch(logout());
-    }
-    
+    let unsubscribe = onAuthStateChanged(auth.auth,(user) => {
+      if (user) {
+        dispatch(login(user))
+      } else {
+        dispatch(logout())
+      }
+  } )
+    return () => unsubscribe();
   },[])
   return (
     <>
