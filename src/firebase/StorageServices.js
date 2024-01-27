@@ -17,7 +17,7 @@ class StorageServices {
 
             console.log('Uploaded a blob or file! ', uploadFileRes);
 
-            return uploadFileRes.ref;
+            return uploadFileRes.metadata.fullPath;
 
         } catch (error) {
             console.error("Error upload file: ", error);
@@ -41,9 +41,10 @@ class StorageServices {
         }
     }
 
-    async getDownloadURL(imgSnapRef){
+    async getDownloadURL(imageFilePath){
+        const fileRef = ref(this.storage, imageFilePath);
         try {
-            const imageDownloadURL = await getDownloadURL(imgSnapRef);
+            const imageDownloadURL = await getDownloadURL(fileRef);
             return imageDownloadURL;
         } catch (error) {
             console.error("Error get download URL: ", error);
