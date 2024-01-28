@@ -31,6 +31,14 @@ function Post() {
             navigate("/")
         }
     }
+
+    const deleteDocument = async () => {
+        const deleteArticleRes = await dbService.deleteArticle(articleData.slug)
+        if(deleteArticleRes){
+            toast.success("Document deleted successfully.");
+            navigate("/")
+        }
+    }
     useEffect(() => {
         getDocument();
     }, [param])
@@ -42,7 +50,7 @@ function Post() {
             articleData.userId === userData.auth.currentUser.uid
             && <div>
                 <button onClick={() => navigate(`/update-post/${param.slug}`)}>Edit</button>
-                <button>Delete</button>
+                <button onClick={deleteDocument}>Delete</button>
             </div>
         }
         <h1>{articleData.title}</h1>

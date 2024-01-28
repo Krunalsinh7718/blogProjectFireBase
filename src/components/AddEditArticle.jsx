@@ -30,59 +30,50 @@ function AddEditArticle({ article = null }) {
   const handleSubmitForm = async (data) => {
     console.log("post submit form data", data);
 
-    if(!article){
+    if (!article) {
       const uploadImageResData = await storageService.uploadFile(data.articleImage[0]);
       if (uploadImageResData) {
         console.log(uploadImageResData);
         setFilePath(uploadImageResData);
-  
+
         const renNum = Math.floor(Math.random() * 2000);
         const timeStamp = Date.now();
         const uniqueSlug = data.slug + renNum + timeStamp;
-        const addArticleRes = await dbService
+        handleUpdateArticle(data, uniqueSlug, uploadImageResData);
+      }
+    } else {
+      if (data.articleImage[0]) {
+
+        const fileDelRef = storageService.deleteFile(article.articleImageRef);
+        if (fileDelRef) {
+          const uploadImageResData = await storageService.uploadFile(data.articleImage[0]);
+          if (uploadImageResData) {
+            handleUpdateArticle(data, data.slug, uploadImageResData);
+           
+          }
+        }
+      } else {
+        handleUpdateArticle(data, data.slug, article.articleImageRef);
+      }
+    }
+  }
+
+  const handleUpdateArticle = async (data, articleSlug, articleImageRef) => {
+    const addArticleRes = await dbService
           .addArticle({
             title: data.title,
-            slug: uniqueSlug,
+            slug: articleSlug,
             content: data.content,
-            articleImageRef: uploadImageResData,
+            articleImageRef: articleImageRef,
             isActive: data.isActive,
             userId: userData.auth.currentUser.uid
           });
         if (addArticleRes) {
           console.log("addArticleRes add article", addArticleRes);
           toast.success("Post added successfully.");
-          navigate(`/post/${uniqueSlug}`)
+          navigate(`/post/${articleSlug}`)
         }
-      }
-    }else{
-      const fileDelRef = storageService.deleteFile(article.articleImageRef);
-      console.log("fileDelRef :", fileDelRef);
-      if(fileDelRef){
-        const uploadImageResData = await storageService.uploadFile(data.articleImage[0]);
-        if (uploadImageResData) {
-          const addArticleRes = await dbService
-            .updateArticle(article.docId,{
-              title: data.title,
-              slug: data.slug,
-              content: data.content,
-              articleImageRef: uploadImageResData,
-              isActive: data.isActive,
-              userId: userData.auth.currentUser.uid
-            });
-          if (addArticleRes) {
-            console.log("addArticleRes add article", addArticleRes);
-            toast.success("Post updated successfully.");
-            navigate(`/post/${data.slug}`)
-          }
-        }
-      }
-    }
   }
-
-  const handleDownloadImage = async () => {
-    const imageURL = await storageService.getDownloadURL(filePath);
-    setDownloadURL(imageURL);
-  };
 
   const slugTransform = (val) => {
     return val
@@ -121,7 +112,7 @@ function AddEditArticle({ article = null }) {
               </div>
 
               <div className="flex flex-col gap-3">
-                <Input label="Image" type="file" {...register("articleImage", { required: true })} />
+                <Input label="Image" type="file" {...register("articleImage", { required: article ? false : true })} />
                 {article?.image && <img src={article.image} alt="Article Image" />}
                 <Select label="Is Active" options={["active", "inactive"]} {...register("isActive")} />
                 <button

@@ -38,7 +38,7 @@ function App() {
     <>
       {!pageLoading ? (
         <>
-          <Header />
+           { authStatus || location.pathname === "/" ? <Header /> : null}
           <Outlet />
         </>
       ) : <DataLoader />}

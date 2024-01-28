@@ -25,10 +25,10 @@ class StorageServices {
         }
     }
 
-    async deleteFile(fileSnapURL){
-        const fileData = await getMetadata(fileSnapURL);
+    async deleteFile(filePath){
+       
         try {
-            const desertRef = ref(this.storage, fileData.fullPath);
+            const desertRef = ref(this.storage, filePath);
 
             const deleteFileRes = deleteObject(desertRef)
 

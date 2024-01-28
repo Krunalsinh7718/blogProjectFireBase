@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDoc, getDoc , getDocs, doc, setDoc, deleteDoc} from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDoc , getDocs, doc, setDoc, deleteDoc, where, orderBy, limit, query} from "firebase/firestore";
 import conf from '../conf/conf';
 
 class DatabaseServices {
@@ -53,12 +53,17 @@ class DatabaseServices {
         }
     }
 
-    async getAllArticles() {
+    async getAllArticles(field = "isActive", operator = "==", condValue = 'active', orderby = 'title', ascDesc = "asc", limitData = 10) {
         try {
+
             let data = [];
-            const querySnapshot = await getDocs(collection(this.db, "articles"));
+            const q = query(collection(this.db, "articles"), 
+            where(field, operator, condValue), 
+            orderBy(orderby,ascDesc),
+            limit(limitData));
+            const querySnapshot = await getDocs(q);
+            
             querySnapshot.forEach((doc) => {
-                // console.log(`${doc.id} => ${doc.data()}`);
                 data.push({...doc.data(), id : doc.id});
             });
             return data;

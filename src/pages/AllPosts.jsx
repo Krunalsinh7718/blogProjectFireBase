@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import dbService from "../firebase/DatabaseServices";
 import PostCard from "../components/PostCard";
 
-function Home() {
-  
+function AllPosts() {
+
     const [posts, setPosts] = useState(null);
 
     useEffect(() => {
         getPosts();
     },[])
     const getPosts = async () => {
-       const allPosts= await dbService.getAllArticles( "isActive",  "==",  'active',  'title',  "desc",  3);
+       const allPosts= await dbService.getAllArticles();
        setPosts(allPosts);
     }
 
@@ -24,4 +24,4 @@ function Home() {
     </>);
 }
 
-export default Home;
+export default AllPosts;
