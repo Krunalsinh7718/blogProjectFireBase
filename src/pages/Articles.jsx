@@ -14,7 +14,7 @@ function Articles() {
 
   async function getSetArticleData() {
     setDataLoading(true);
-    const articleData = await dbService.getAllDocs();
+    const articleData = await dbService.getAllArticles();
     setArticles(articleData);
     
     setDataLoading(false);

@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDoc, getDocs, doc, setDoc, deleteDoc} from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDoc , getDocs, doc, setDoc, deleteDoc, where, orderBy, limit, query} from "firebase/firestore";
 import conf from '../conf/conf';
 
 class DatabaseServices {
@@ -10,8 +10,8 @@ class DatabaseServices {
 
     async addArticle(article) {
         try {
-            const articlesRef = doc(collection(this.db, "articles"));
-            await setDoc(articlesRef, article);
+            const articlesRef = doc(this.db, "articles", article.slug);
+            const articleRes = await setDoc(articlesRef, article );
             return true;
         } catch (e) {
             console.error("Error add document: ", e);
@@ -42,12 +42,28 @@ class DatabaseServices {
         }
     }
 
-    async getAllDocs() {
+    async getArticle(slug){
         try {
+            const docRef = doc(this.db, "articles", slug);
+            const docSnap = await getDoc(docRef);
+            return docSnap;
+        } catch (error) {
+            console.error("Error get document: ", error);
+            return false;
+        }
+    }
+
+    async getAllArticles(field = "isActive", operator = "==", condValue = 'active', orderby = 'title', ascDesc = "asc", limitData = 10) {
+        try {
+
             let data = [];
-            const querySnapshot = await getDocs(collection(this.db, "articles"));
+            const q = query(collection(this.db, "articles"), 
+            where(field, operator, condValue), 
+            orderBy(orderby,ascDesc),
+            limit(limitData));
+            const querySnapshot = await getDocs(q);
+            
             querySnapshot.forEach((doc) => {
-                // console.log(`${doc.id} => ${doc.data()}`);
                 data.push({...doc.data(), id : doc.id});
             });
             return data;

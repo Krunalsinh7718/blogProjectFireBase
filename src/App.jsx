@@ -13,26 +13,34 @@ import { Outlet, useLocation } from 'react-router-dom'
 import auth from './firebase/AuthService'
 import Header from './components/header/Header'
 import { onAuthStateChanged } from 'firebase/auth'
+import DataLoader from './components/DataLoader'
 
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(() => {
-    let unsubscribe = onAuthStateChanged(auth.auth,(user) => {
+    let unsubscribe = onAuthStateChanged(auth.auth, (user) => {
       if (user) {
         dispatch(login(user))
+        setPageLoading(false);
       } else {
         dispatch(logout())
+        setPageLoading(false);
       }
-  } )
+    })
     return () => unsubscribe();
-  },[])
+  }, [])
   return (
     <>
-    <Header />
-    <Outlet />
+      {!pageLoading ? (
+        <>
+           { authStatus || location.pathname === "/" ? <Header /> : null}
+          <Outlet />
+        </>
+      ) : <DataLoader />}
     </>
   )
 }

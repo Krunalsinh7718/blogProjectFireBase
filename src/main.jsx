@@ -12,6 +12,9 @@ import SignIn from './pages/SignIn.jsx'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddPost from './pages/AddPost.jsx'
+import Post from './pages/Post.jsx'
+import UpdatePost from './pages/UpdatePost.jsx'
+import AllPosts from './pages/AllPosts.jsx'
 
 const routes = createBrowserRouter([
   {
@@ -33,6 +36,18 @@ const routes = createBrowserRouter([
       {
         path: "/add-post",
         element: <AuthLayout authentication={true}><AddPost /></AuthLayout>
+      },
+      {
+        path: "/all-posts",
+        element: <AuthLayout authentication={true}><AllPosts /></AuthLayout>
+      },
+      {
+        path: "/post/:slug",
+        element: <AuthLayout authentication={true}> <Post /> </AuthLayout>
+      },
+      {
+        path: "/update-post/:slug",
+        element: <AuthLayout authentication={true}> <UpdatePost /> </AuthLayout>
       }
     ]
   }

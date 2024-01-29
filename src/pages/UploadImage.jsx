@@ -13,7 +13,7 @@ function UploadImage() {
     // console.log(image.name + Math.floor(Math.random() * 1000) + Date.now());
     const uploadImageResData = await storageService.uploadFile(image);
     console.log("file upload res data : ", uploadImageResData);
-    setImageSnapRef(uploadImageResData);
+    setImageSnapRef(uploadImageResData.metadata.fullPath);
   };
 
   const handleDownloadImage = async () => {
