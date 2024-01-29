@@ -28,6 +28,9 @@ function SigninForm() {
         toast.success("login successfully.");
         dispatch(login(userCredential.user));
         setDataLoading(false);
+      }else{
+        toast.error("Please enter valid email or password.");
+        setDataLoading(false);
       }
     } catch (error) {
       setDataLoading(false);
@@ -38,7 +41,7 @@ function SigninForm() {
   return (
     <>
      
-      <form onSubmit={handleSubmit(handleSigin)}>
+      <form onSubmit={handleSubmit(handleSigin)} autoComplete="off">
         <div className="space-y-5">
           <div>
             <Input
@@ -53,7 +56,7 @@ function SigninForm() {
               })}
             />
             <div className="text-red-600">
-              <ErrorMessage errors={errors} name="name" />
+              <ErrorMessage errors={errors} name="email" />
             </div>
           </div>
           <div>
@@ -69,7 +72,7 @@ function SigninForm() {
               })}
             />
             <div className="text-red-600">
-              <ErrorMessage errors={errors} name="name" />
+              <ErrorMessage errors={errors} name="password" />
             </div>
           </div>
           <Button

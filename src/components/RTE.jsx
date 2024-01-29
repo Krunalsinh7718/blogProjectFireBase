@@ -7,16 +7,18 @@ function RTE({
     label,
     control,
     defaultValue = "" ,
+    className,
     ...props
 }) {
 
     return ( <>
-        <div className="w-full">
+        <div className={`w-full ${className}`}>
             {label && <label className="text-base font-medium text-gray-900">{label}</label>}
             <div>
                 <Controller 
                 name={name || "Content"}
                 control={control}
+                rules={{ required: "This is required." }}
                 render={({field : {onChange}}) => (
                     <Editor 
                         initialValue={defaultValue}

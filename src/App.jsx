@@ -20,6 +20,7 @@ function App() {
   const dispatch = useDispatch();
   const location = useLocation();
   const [pageLoading, setPageLoading] = useState(true);
+  const authStatus = useSelector(state => state.auth.status)
 
   useEffect(() => {
     let unsubscribe = onAuthStateChanged(auth.auth, (user) => {
