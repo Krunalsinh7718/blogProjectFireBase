@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ErrorMessage } from "@hookform/error-message";
 
-function AddEditArticle({ article = null }) {
+function AddEditBlog({ blog = null }) {
   const navigate = useNavigate();
   const [filePath, setFilePath] = useState("");
   const [downloadUrl, setDownloadURL] = useState("");
@@ -29,19 +29,19 @@ function AddEditArticle({ article = null }) {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      title: article?.title || "",
-      slug: article?.slug || "",
-      content: article?.content || "",
-      status: article?.status || "active",
+      title: blog?.title || "",
+      slug: blog?.slug || "",
+      content: blog?.content || "",
+      status: blog?.status || "active",
     },
   });
   const handleSubmitForm = async (data) => {
     setLoadingState(true);
     console.log("post submit form data", data);
 
-    if (!article) {
+    if (!blog) {
       const uploadImageResData = await storageService.uploadFile(
-        data.articleImage[0]
+        data.blogImage[0]
       );
       if (uploadImageResData) {
         console.log(uploadImageResData);
@@ -50,41 +50,41 @@ function AddEditArticle({ article = null }) {
         const renNum = Math.floor(Math.random() * 2000);
         const timeStamp = Date.now();
         const uniqueSlug = data.slug + renNum + timeStamp;
-        handleUpdateArticle(data, uniqueSlug, uploadImageResData);
+        handleUpdateBlog(data, uniqueSlug, uploadImageResData);
       }
     } else {
-      if (data.articleImage[0]) {
+      if (data.blogImage[0]) {
         const fileDelRef = await storageService.deleteFile(
-          article.articleImageRef
+          blog.blogImageRef
         );
         if (fileDelRef) {
           const uploadImageResData = await storageService.uploadFile(
-            data.articleImage[0]
+            data.blogImage[0]
           );
           if (uploadImageResData) {
-            handleUpdateArticle(data, data.slug, uploadImageResData);
+            handleUpdateBlog(data, blog.slug, uploadImageResData);
           }
         }
       } else {
-        handleUpdateArticle(data, data.slug, article.articleImageRef);
+        handleUpdateBlog(data, blog.slug, blog.blogImageRef);
       }
     }
     setLoadingState(false);
   };
 
-  const handleUpdateArticle = async (data, articleSlug, articleImageRef) => {
-    const addArticleRes = await dbService.addArticle({
+  const handleUpdateBlog = async (data, blogSlug, blogImageRef) => {
+    const addBlogRes = await dbService.addBlog({
       title: data.title,
-      slug: articleSlug,
+      slug: blogSlug,
       content: data.content,
-      articleImageRef: articleImageRef,
+      blogImageRef: blogImageRef,
       isActive: data.isActive,
       userId: userData.auth.currentUser.uid,
     });
-    if (addArticleRes) {
-      console.log("addArticleRes add article", addArticleRes);
+    if (addBlogRes) {
+      console.log("addBlogRes add blog", addBlogRes);
       toast.success("Post added successfully.");
-      navigate(`/post/${articleSlug}`);
+      navigate(`/blog/${blogSlug}`);
     }
   };
 
@@ -98,7 +98,7 @@ function AddEditArticle({ article = null }) {
 
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
-      if (name === "title" && !article) {
+      if (name === "title" && !blog) {
         setValue("slug", slugTransform(value[name]), { shouldValidate: true });
       }
     });
@@ -111,11 +111,11 @@ function AddEditArticle({ article = null }) {
         <div>
           <div>
             {/* <button onClick={handleDownloadImage}>Get Image</button>{downloadUrl && (<> <img src={downloadUrl} alt="Image" /></> )} */}
-            <h2 className="text-4xl font-bold mb-4 ">
-              {article ? "Update Article" : "Add Article"}
+            <h2 className="text-4xl font-bold mb-5 ">
+              {blog ? "Update Blog" : "Add Blog"}
             </h2>
 
-            <form onSubmit={handleSubmit(handleSubmitForm)} className="mt-8">
+            <form onSubmit={handleSubmit(handleSubmitForm)} >
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div>
                   <Input
@@ -135,7 +135,7 @@ function AddEditArticle({ article = null }) {
                 <div>
                   <Input
                     label="Slug"
-                    disabled={article ? true : false}
+                    disabled={blog ? true : false}
                     {...register("slug", {
                       required: "This is required",
                       maxLength: {
@@ -152,12 +152,12 @@ function AddEditArticle({ article = null }) {
                   <Input
                     label="Image"
                     type="file"
-                    {...register("articleImage", {
-                      required: article ? false : "This is required",
+                    {...register("blogImage", {
+                      required: blog ? false : "This is required",
                     })}
                   />
                   <div className="text-red-600">
-                    <ErrorMessage errors={errors} name="articleImage" />
+                    <ErrorMessage errors={errors} name="blogImage" />
                   </div>
                 </div>
                 <Select
@@ -165,8 +165,8 @@ function AddEditArticle({ article = null }) {
                   options={["active", "inactive"]}
                   {...register("isActive")}
                 />
-                {article?.image && (
-                  <img src={article.image} alt="Article Image" />
+                {blog?.image && (
+                  <img src={blog.image} alt="Blog Image" />
                 )}
                 <div className="col-span-2">
                   <RTE
@@ -187,10 +187,10 @@ function AddEditArticle({ article = null }) {
               >
                 {loadingState ? (
                   <DataLoader button light/>
-                ) : article ? (
-                  "Update Article"
+                ) : blog ? (
+                  "Update Blog"
                 ) : (
-                  "Add Article"
+                  "Add Blog"
                 )}
               </button>
             </form>
@@ -201,4 +201,4 @@ function AddEditArticle({ article = null }) {
   );
 }
 
-export default AddEditArticle;
+export default AddEditBlog;

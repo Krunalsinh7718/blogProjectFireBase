@@ -8,10 +8,10 @@ class DatabaseServices {
         this.db = getFirestore(this.app);
     }
 
-    async addArticle(article) {
+    async addBlog(blog) {
         try {
-            const articlesRef = doc(this.db, "articles", article.slug);
-            const articleRes = await setDoc(articlesRef, article );
+            const blogsRef = doc(this.db, "blogs", blog.slug);
+            const blogRes = await setDoc(blogsRef, blog );
             return true;
         } catch (e) {
             console.error("Error add document: ", e);
@@ -19,10 +19,10 @@ class DatabaseServices {
         }
     }
 
-    async updateArticle(docId, article){
+    async updateBlog(docId, blog){
         try {
-            const articleDocRef = doc(this.db, "articles", docId);
-            await setDoc(articleDocRef, article);
+            const blogDocRef = doc(this.db, "blogs", docId);
+            await setDoc(blogDocRef, blog);
             return true;
         } catch (error) {
             console.error("Error update document: ", error);
@@ -30,10 +30,10 @@ class DatabaseServices {
         }
     }
 
-    async deleteArticle(docId){
+    async deleteBlog(docId){
         try {
-            const articleDocRef = doc(this.db, "articles", docId);
-            const deleteDocRes =  await deleteDoc(articleDocRef);
+            const blogDocRef = doc(this.db, "blogs", docId);
+            const deleteDocRes =  await deleteDoc(blogDocRef);
             console.log("deleteDocRes =>", deleteDocRes);
             return true;
         } catch (error) {
@@ -42,9 +42,9 @@ class DatabaseServices {
         }
     }
 
-    async getArticle(slug){
+    async getBlog(slug){
         try {
-            const docRef = doc(this.db, "articles", slug);
+            const docRef = doc(this.db, "blogs", slug);
             const docSnap = await getDoc(docRef);
             return docSnap;
         } catch (error) {
@@ -53,11 +53,11 @@ class DatabaseServices {
         }
     }
 
-    async getAllArticles(field = "isActive", operator = "==", condValue = 'active', orderby = 'title', ascDesc = "asc", limitData = 10) {
+    async getAllPosts(field = "isActive", operator = "==", condValue = 'active', orderby = 'title', ascDesc = "asc", limitData = 10) {
         try {
 
             let data = [];
-            const q = query(collection(this.db, "articles"), 
+            const q = query(collection(this.db, "blogs"), 
             where(field, operator, condValue), 
             orderBy(orderby,ascDesc),
             limit(limitData));

@@ -34,19 +34,19 @@ const routes = createBrowserRouter([
         element: <AuthLayout authentication={false}><SignIn /></AuthLayout>
       },
       {
-        path: "/add-post",
+        path: "/add-blog",
         element: <AuthLayout authentication={true}><AddPost /></AuthLayout>
       },
       {
-        path: "/all-posts",
+        path: "/all-blogs",
         element: <AuthLayout authentication={true}><AllPosts /></AuthLayout>
       },
       {
-        path: "/post/:slug",
+        path: "/blog/:slug",
         element: <AuthLayout authentication={true}> <Post /> </AuthLayout>
       },
       {
-        path: "/update-post/:slug",
+        path: "/update-blog/:slug",
         element: <AuthLayout authentication={true}> <UpdatePost /> </AuthLayout>
       }
     ]

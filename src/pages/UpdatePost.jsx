@@ -1,42 +1,48 @@
 import { useParams } from "react-router-dom";
-import AddEditArticle from "../components/AddEditArticle";
+import AddEditBlog from "../components/AddEditBlog";
 import Container from "../components/Container";
 import { useEffect, useState } from "react";
 import dbService from "../firebase/DatabaseServices";
 import { toast } from "react-toastify";
 import storageService from "../firebase/StorageServices";
+import DataLoader from "../components/DataLoader";
 
 
 function UpdatePost() {
 
   const params = useParams();
 
-  const [article, setArticle] = useState(null);
+  const [blog, setBlog] = useState(null);
+  const [dataLoading, setDataLoading] = useState(null);
 
-  const getArticleData = async () => {
-    const articleSnp = await dbService.getArticle(params.slug);
-    if (articleSnp.exists()) {
-      console.log("articleSnp ", articleSnp);
-      const articleRowData = articleSnp.data();
-      const imageURL = await storageService.getDownloadURL(articleRowData.articleImageRef);
-      setArticle({...articleRowData , image : imageURL, docId : params.slug});
+  const getBlogData = async () => {
+    setDataLoading(true);
+    const blogSnp = await dbService.getBlog(params.slug);
+    if(blogSnp.exists()) {
+      console.log("blogSnp ", blogSnp);
+      const blogRowData = blogSnp.data();
+      const imageURL = await storageService.getDownloadURL(blogRowData.blogImageRef);
+      setBlog({...blogRowData , image : imageURL, docId : params.slug});
      
     }else{
       toast.error("Post not available.");
       navigate("/");
     }
+    setDataLoading(false);
   }
 
   useEffect(() => {
-    getArticleData();
+    getBlogData();
   },[params])
 
-  return (
+  return !dataLoading ? (
     <>
       <Container>
-        {article && <AddEditArticle article={article}/>}
+        {blog && <AddEditBlog blog={blog}/>}
       </Container>
     </>
+   ) : (
+    <DataLoader />
   );
 }
 

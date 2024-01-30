@@ -12,7 +12,8 @@ function Home() {
     getPosts();
   }, []);
   const getPosts = async () => {
-    const allPosts = await dbService.getAllArticles(
+    setDataLoading(true);
+    const allPosts = await dbService.getAllPosts(
       "isActive",
       "==",
       "active",
@@ -32,7 +33,7 @@ function Home() {
   return (
     <>
       <Container>
-        <h2 className="text-4xl font-bold mb-4">Recent Post</h2>
+        <h2 className="text-4xl font-bold mb-5">Recent Blogs</h2>
         <div className="flex flex-wrap gap-4 ">
           {dataLoading ? (
             <DataLoader />
@@ -43,7 +44,7 @@ function Home() {
                 key={post.slug}
                 slug={post.slug}
                 title={post.title}
-                articleImageRef={post.articleImageRef}
+                blogImageRef={post.blogImageRef}
               />
             ))
           )}

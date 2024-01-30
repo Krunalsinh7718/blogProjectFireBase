@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import storageService from "../firebase/StorageServices";
 import LazyImage from "./LazyImage";
 
-function PostCard({ slug, articleImageRef, title, className }) {
+function PostCard({ slug, blogImageRef, title, className }) {
 
   const [imageUrl, setImageUrl] = useState();
 
   const getImageUrl = async () => {
-    const imageURLRes = await storageService.getDownloadURL(articleImageRef);
+    const imageURLRes = await storageService.getDownloadURL(blogImageRef);
     setImageUrl(imageURLRes);
   }
 
@@ -17,7 +17,7 @@ function PostCard({ slug, articleImageRef, title, className }) {
   }, [])
 
   return (<>
-    <Link to={`/post/${slug}`}>
+    <Link to={`/blog/${slug}`}>
       <div className={`w-[300px] rounded-md border shadow hover:shadow-lg bg-white ${className}`}>
         {
           imageUrl &&

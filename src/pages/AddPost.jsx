@@ -1,4 +1,4 @@
-import AddEditArticle from "../components/AddEditArticle";
+import AddEditBlog from "../components/AddEditBlog";
 import Container from "../components/Container";
 
 
@@ -6,7 +6,7 @@ function AddPost() {
   return (
     <>
       <Container>
-        <AddEditArticle />
+        <AddEditBlog />
       </Container>
     </>
   );

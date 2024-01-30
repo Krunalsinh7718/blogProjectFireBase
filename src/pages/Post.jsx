@@ -10,22 +10,25 @@ import Container from "../components/Container";
 import LazyImage from "../components/LazyImage";
 
 function Post() {
-  const [articleData, setArticleData] = useState(null);
+  const [blogData, setBlogData] = useState(null);
   const userData = useSelector((state) => state.auth.userData);
   const navigate = useNavigate();
+  const [dataLoading, setDataLoading] = useState(null);
 
   const param = useParams();
 
   const getDocument = async () => {
-    console.log("slug", param.slug);
-    const dataSnap = await dbService.getArticle(param.slug);
+    setDataLoading(true);
+    
+    const dataSnap = await dbService.getBlog(param.slug);
     if (dataSnap.exists()) {
-      const articleRowData = dataSnap.data();
+      const blogRowData = dataSnap.data();
+      console.log("data res :", blogRowData);
       const imageURL = await storageService.getDownloadURL(
-        articleRowData.articleImageRef
+        blogRowData.blogImageRef
       );
       if (imageURL) {
-        setArticleData({ ...articleRowData, image: imageURL });
+        setBlogData({ ...blogRowData, image: imageURL });
       } else {
         toast.error("Something went wrong.");
         navigate("/");
@@ -34,11 +37,12 @@ function Post() {
       console.log("No such document!");
       navigate("/");
     }
+    setDataLoading(false);
   };
 
   const deleteDocument = async () => {
-    const deleteArticleRes = await dbService.deleteArticle(articleData.slug);
-    if (deleteArticleRes) {
+    const deleteBlogRes = await dbService.deleteBlog(blogData.slug);
+    if (deleteBlogRes) {
       toast.success("Document deleted successfully.");
       navigate("/");
     }
@@ -47,20 +51,20 @@ function Post() {
     getDocument();
   }, [param]);
 
-  return articleData ? (
+  return !dataLoading ? (
     <>
       <div className="mx-auto  max-w-2xl">
-        <h1 className="text-3xl font-bold capitalize mb-4">
-          {articleData.title}
+        <h1 className="text-3xl font-bold capitalize mb-5">
+          {blogData?.title}
         </h1>
         <div className="rounded-lg bg-gray-200 p-4 mx-auto  max-w-2xl relative mb-4">
-          <LazyImage src={articleData.image} alt="Article Image" className="w-full" height={427} width={640} style={{objectFit: "cover"}}/>
-          {/* <img src={articleData.image} alt="Article Image" className="w-full" height={427} width={640} style={{objectFit: "cover"}}/> */}
-          {articleData.userId === userData.auth.currentUser.uid && (
+          <LazyImage src={blogData?.image} alt="Blog Image" className="w-full" height={427} width={640} style={{objectFit: "cover"}}/>
+          {/* <img src={blogData.image} alt="Blog Image" className="w-full" height={427} width={640} style={{objectFit: "cover"}}/> */}
+          {blogData?.userId === userData.auth.currentUser.uid && (
             <div className="absolute right-10 top-10 flex gap-2">
               <button
-                onClick={() => navigate(`/update-post/${param.slug}`)}
-                className="rounded-full bg-black h-10 w-10 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black grid place-items-center"
+                onClick={() => navigate(`/update-blog/${param.slug}`)}
+                className="rounded-full bg-black h-10 w-10 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black grid place-items-center hover:bg-blue-600"
                 title="Edit"
               >
                 <svg
@@ -81,7 +85,7 @@ function Post() {
               </button>
               <button
                 onClick={deleteDocument}
-                className="rounded-full bg-black h-10 w-10 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black grid place-items-center"
+                className="rounded-full bg-black h-10 w-10 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black grid place-items-center hover:bg-blue-600"
                 title="Delete"
                 >
                 <svg
@@ -101,7 +105,7 @@ function Post() {
         </div>
 
         <hr className="mb-4"/>
-        <div>{parse(articleData.content)}</div>
+        <div>{parse(blogData?.content || "")}</div>
       </div>
     </>
   ) : (
