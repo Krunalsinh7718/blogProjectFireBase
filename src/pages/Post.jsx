@@ -7,6 +7,7 @@ import storageService from "../firebase/StorageServices";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import Container from "../components/Container";
+import LazyImage from "../components/LazyImage";
 
 function Post() {
   const [articleData, setArticleData] = useState(null);
@@ -53,12 +54,13 @@ function Post() {
           {articleData.title}
         </h1>
         <div className="rounded-lg bg-gray-200 p-4 mx-auto  max-w-2xl relative mb-4">
-          <img src={articleData.image} alt="Article Image" className="w-full" height={427} width={640} style={{objectFit: "cover"}}/>
+          <LazyImage src={articleData.image} alt="Article Image" className="w-full" height={427} width={640} style={{objectFit: "cover"}}/>
+          {/* <img src={articleData.image} alt="Article Image" className="w-full" height={427} width={640} style={{objectFit: "cover"}}/> */}
           {articleData.userId === userData.auth.currentUser.uid && (
             <div className="absolute right-10 top-10 flex gap-2">
               <button
                 onClick={() => navigate(`/update-post/${param.slug}`)}
-                className="rounded-full bg-black h-12 w-12 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black grid place-items-center"
+                className="rounded-full bg-black h-10 w-10 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black grid place-items-center"
                 title="Edit"
               >
                 <svg
@@ -66,8 +68,8 @@ function Post() {
                   fill="none"
                   stroke="#fff"
                   viewBox="0 0 24 24"
-                  height={24}
-                  width={24}
+                  height={16}
+                  width={16}
                 >
                   <path
                     fill="#fff"
@@ -79,14 +81,14 @@ function Post() {
               </button>
               <button
                 onClick={deleteDocument}
-                className="rounded-full bg-black h-12 w-12 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black grid place-items-center"
+                className="rounded-full bg-black h-10 w-10 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black grid place-items-center"
                 title="Delete"
                 >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 1024 1024"
-                  height={24}
-                  width={24}
+                  height={16}
+                  width={16}
                 >
                   <path
                     fill="#fff"

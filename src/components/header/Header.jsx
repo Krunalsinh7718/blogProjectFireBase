@@ -1,5 +1,5 @@
 import Logo from "./Logo";
-import {Link, NavLink, useNavigate} from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import LogoutBtn from "./LogoutBtn";
 import { useSelector } from "react-redux";
 
@@ -12,24 +12,24 @@ function Header() {
       name: 'Home',
       slug: "/",
       allow: true
-    }, 
-  {
+    },
+    {
       name: "All Posts",
       slug: "/all-posts",
       allow: authStatus,
-  },
-  {
+    },
+    {
       name: "Add Post",
       slug: "/add-post",
       allow: authStatus,
-  },
+    },
   ]
 
 
 
   return (
     <>
-    
+
       <div className="relative w-full bg-white mb-5">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <div className="inline-flex items-center space-x-2">
@@ -44,13 +44,16 @@ function Header() {
               {
                 navItems.map(item => item.allow ? (
                   <li key={item.name}>
-                    <NavLink 
+                    <NavLink
                       to={item.slug}
-                      className="text-sm font-semibold text-gray-800 hover:text-gray-900">
+                      className={({ isActive, isPending }) =>
+                        isActive ? "active text-sm font-semibold text-blue-600 py-2 border-b-2 border-blue-600 border-dotted" : "text-sm font-semibold text-gray-800 hover:text-blue-600 py-2"
+                      }
+                    >
                       {item.name}
-                      </NavLink>
+                    </NavLink>
                   </li>
-                ): null)
+                ) : null)
               }
             </ul>
           </div>
@@ -59,16 +62,16 @@ function Header() {
               authStatus ? (
                 <LogoutBtn />
               ) : (
-              <button
-                type="button"
-                className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                onClick={() => navigate("/signin")}
-              >
-                Login
-              </button>
+                <button
+                  type="button"
+                  className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                  onClick={() => navigate("/signin")}
+                >
+                  Login
+                </button>
               )
             }
-         
+
           </div>
           <div className="lg:hidden">
             <svg

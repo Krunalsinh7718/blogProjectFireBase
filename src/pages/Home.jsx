@@ -33,7 +33,7 @@ function Home() {
     <>
       <Container>
         <h2 className="text-4xl font-bold mb-4">Recent Post</h2>
-        <div className="flex gap-4 ">
+        <div className="flex flex-wrap gap-4 ">
           {dataLoading ? (
             <DataLoader />
           ) : (

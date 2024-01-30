@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+    background-color: #fafafa;
+    opacity: 1;
+    background-image: radial-gradient(#c5c5c5 0.55px, #fafafa 0.55px);
+    background-size: 11px 11px;
+}
+
 .table-loader{
     position: absolute;
     left: 0;
@@ -12,6 +19,7 @@
     place-items: center;
     background: rgba(255, 255, 255, 0.161);
 }
+
 
 /* BEGIN : auth css */
 @media(max-width: 575px){
