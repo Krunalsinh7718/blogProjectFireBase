@@ -181,7 +181,7 @@ function AddEditBlog({ blog = null }) {
               <div >
                 <Button
                   type="submit"
-                  className="h-14 h-14 inline-flex items-center justify-center rounded-md bg-black px-12 py-2.5 font-semibold leading-7 text-white hover:bg-black/80 relative"
+                  className="h-14 h-14 inline-flex items-center justify-center rounded-md bg-black px-6 py-2.5 font-semibold leading-7 text-white hover:bg-black/80 relative"
                   disabled={loadingState}>
                   <span className={`${loadingState ? 'invisible ' : 'visible'} inline-flex items-center`}>
                     {blog ? (

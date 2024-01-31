@@ -22,6 +22,7 @@ function Home() {
       "desc",
       3
     );
+
     if (allPosts) {
       setPosts(allPosts);
       setDataLoading(false);
@@ -37,7 +38,6 @@ function Home() {
         <div className="flex flex-wrap gap-4 ">
           {dataLoading ? (
             <>
-              {/* <DataLoader /> */}
               <PageLoader />
             </>
           ) : (
