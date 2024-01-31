@@ -10,13 +10,13 @@ import { login } from "../store/authSlice";
 import { toast } from "react-toastify";
 
 function SigninForm() {
- 
+
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
-  const [dataLoading, setDataLoading] = useState();
+  const [dataLoading, setDataLoading] = useState(false);
   const dispatch = useDispatch();
 
   const handleSigin = async (data) => {
@@ -24,11 +24,11 @@ function SigninForm() {
     try {
       const userCredential = await auth.signInUser(data);
 
-      if(userCredential){
+      if (userCredential) {
         toast.success("login successfully.");
         dispatch(login(userCredential.user));
         setDataLoading(false);
-      }else{
+      } else {
         toast.error("Please enter valid email or password.");
         setDataLoading(false);
       }
@@ -40,7 +40,7 @@ function SigninForm() {
 
   return (
     <>
-     
+
       <form onSubmit={handleSubmit(handleSigin)} autoComplete="off">
         <div className="space-y-5">
           <div>
@@ -77,29 +77,27 @@ function SigninForm() {
           </div>
           <Button
             type="submit"
-            className="h-14 h-14 inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
+            className="h-14 h-14 inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80 relative"
             disabled={dataLoading}
           >
-            {!dataLoading ? (
-              <>
-                Sign In
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={16}
-                  height={16}
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </>
-            ) : (
-              <DataLoader button light />
-            )}
+            <span className={`${dataLoading ? 'invisible ' : 'visible'} inline-flex items-center`}>
+              Sign In
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={16}
+                height={16}
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                viewBox="0 0 24 24"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </span>
+            <DataLoader button light className={`${!dataLoading ? 'invisible' : 'visible'} absolute inset-0 m-auto`}/>
+
           </Button>
         </div>
       </form>

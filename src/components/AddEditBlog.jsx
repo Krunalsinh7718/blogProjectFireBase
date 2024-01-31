@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ErrorMessage } from "@hookform/error-message";
+import Button from "./Button";
 
 function AddEditBlog({ blog = null }) {
   const navigate = useNavigate();
@@ -17,7 +18,6 @@ function AddEditBlog({ blog = null }) {
   const [downloadUrl, setDownloadURL] = useState("");
   const [loadingState, setLoadingState] = useState(false);
   const userData = useSelector((state) => state.auth.userData);
-  // console.log(userData.auth.currentUser.uid);
 
   const {
     register,
@@ -180,19 +180,21 @@ function AddEditBlog({ blog = null }) {
                   </div>
                 </div>
               </div>
-              <button
-                type="submit"
-                className="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
-                disabled={loadingState}
-              >
-                {loadingState ? (
-                  <DataLoader button light/>
-                ) : blog ? (
-                  "Update Blog"
-                ) : (
-                  "Add Blog"
-                )}
-              </button>
+              <div className="flex justify-end">
+                <Button
+                  type="submit"
+                  className="h-14 h-14 inline-flex items-center justify-center rounded-md bg-black px-12 py-2.5 font-semibold leading-7 text-white hover:bg-black/80 relative"
+                  disabled={loadingState}>
+                  <span className={`${loadingState ? 'invisible ' : 'visible'} inline-flex items-center`}>
+                    {blog ? (
+                      "Update Blog"
+                    ) : (
+                      "Add Blog"
+                    )}
+                  </span>
+                  <DataLoader button light className={`${!loadingState ? 'invisible' : 'visible'} absolute inset-0 m-auto`} />
+                </Button>
+              </div>
             </form>
           </div>
         </div>

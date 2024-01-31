@@ -74,11 +74,11 @@ function SignupForm() {
           </div>
           <Button
             type="submit"
-            className="h-14 h-14 inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
+            className="h-14 h-14 inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80 relative"
             disabled={dataLoading}
           >
-            {!dataLoading ? (
-              <>
+           
+              <span className={`${dataLoading ? 'invisible ' : 'visible'} inline-flex items-center`}>
                 Create Account
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -93,10 +93,10 @@ function SignupForm() {
                 >
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
-              </>
-            ) : (
-              <DataLoader button light />
-            )}
+              </span>
+           
+              <DataLoader button light className={`${!dataLoading ? 'invisible' : 'visible'} absolute inset-0 m-auto`}/>
+           
           </Button>
         </div>
       </form>

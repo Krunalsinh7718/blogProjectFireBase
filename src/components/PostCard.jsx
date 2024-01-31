@@ -18,12 +18,12 @@ function PostCard({ slug, blogImageRef, title, className }) {
 
   return (<>
     <Link to={`/blog/${slug}`}>
-      <div className={`w-[300px] rounded-md border shadow hover:shadow-lg bg-white ${className}`}>
+      <div className={`w-[300px] border shadow rounded-md hover:shadow-lg bg-white overflow-hidden ${className}`}>
         {
           imageUrl &&
           <LazyImage src={imageUrl}
             alt="sdf"
-            className="h-[200px] w-full rounded-md object-cover" 
+            className="h-[200px] w-full object-cover" 
             width={298}
             height={200}/>
         }
