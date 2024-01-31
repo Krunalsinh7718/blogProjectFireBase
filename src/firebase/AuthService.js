@@ -9,14 +9,10 @@ class AuthService {
         this.gAuthProvider = new GoogleAuthProvider();
     }
     async registerUser({ email, password }) {
-        console.log(email, password);
-        console.log("before register ", this.auth);
         try {
             const user = await createUserWithEmailAndPassword(this.auth, email, password)
             if (user) {
-                console.log(email, password);
                 const signinUser = await this.signInUser({ email, password });
-                // console.log("signinUser  ",signinUser.user);
 
                 console.log("current user ", this.auth);
                 return signinUser;

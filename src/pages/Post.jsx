@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import Container from "../components/Container";
 import LazyImage from "../components/LazyImage";
+import PageLoader from "../components/PageLoader";
 
 function Post() {
   const [blogData, setBlogData] = useState(null);
@@ -23,7 +24,6 @@ function Post() {
     const dataSnap = await dbService.getBlog(param.slug);
     if (dataSnap.exists()) {
       const blogRowData = dataSnap.data();
-      console.log("data res :", blogRowData);
       const imageURL = await storageService.getDownloadURL(
         blogRowData.blogImageRef
       );
@@ -34,7 +34,6 @@ function Post() {
         navigate("/");
       }
     } else {
-      console.log("No such document!");
       navigate("/");
     }
     setDataLoading(false);
@@ -109,7 +108,7 @@ function Post() {
       </div>
     </>
   ) : (
-    <DataLoader />
+    <PageLoader />
   );
 }
 

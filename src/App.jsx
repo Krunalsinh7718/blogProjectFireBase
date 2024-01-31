@@ -7,6 +7,7 @@ import auth from './firebase/AuthService'
 import Header from './components/header/Header'
 import { onAuthStateChanged } from 'firebase/auth'
 import DataLoader from './components/DataLoader'
+import Loader2 from './components/PageLoader';
 
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
            { authStatus || location.pathname === "/" ? <Header /> : null}
           <Outlet />
         </>
-      ) : <DataLoader />}
+      ) : <Loader2 />}
     </>
   )
 }

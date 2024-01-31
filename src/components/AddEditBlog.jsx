@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ErrorMessage } from "@hookform/error-message";
 import Button from "./Button";
+import BtnLoader from "./BtnLoader";
 
 function AddEditBlog({ blog = null }) {
   const navigate = useNavigate();
@@ -37,14 +38,12 @@ function AddEditBlog({ blog = null }) {
   });
   const handleSubmitForm = async (data) => {
     setLoadingState(true);
-    console.log("post submit form data", data);
 
     if (!blog) {
       const uploadImageResData = await storageService.uploadFile(
         data.blogImage[0]
       );
       if (uploadImageResData) {
-        console.log(uploadImageResData);
         setFilePath(uploadImageResData);
 
         const renNum = Math.floor(Math.random() * 2000);
@@ -82,7 +81,6 @@ function AddEditBlog({ blog = null }) {
       userId: userData.auth.currentUser.uid,
     });
     if (addBlogRes) {
-      console.log("addBlogRes add blog", addBlogRes);
       toast.success("Post added successfully.");
       navigate(`/blog/${blogSlug}`);
     }
@@ -180,7 +178,7 @@ function AddEditBlog({ blog = null }) {
                   </div>
                 </div>
               </div>
-              <div className="flex justify-end">
+              <div >
                 <Button
                   type="submit"
                   className="h-14 h-14 inline-flex items-center justify-center rounded-md bg-black px-12 py-2.5 font-semibold leading-7 text-white hover:bg-black/80 relative"
@@ -192,7 +190,7 @@ function AddEditBlog({ blog = null }) {
                       "Add Blog"
                     )}
                   </span>
-                  <DataLoader button light className={`${!loadingState ? 'invisible' : 'visible'} absolute inset-0 m-auto`} />
+                  <BtnLoader className={`${!loadingState ? 'invisible' : 'visible'} absolute inset-0 m-auto`}/>
                 </Button>
               </div>
             </form>

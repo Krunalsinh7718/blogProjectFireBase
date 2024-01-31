@@ -1,5 +1,4 @@
 function DataLoader({button, light, className, ...props}) {
-    // console.log(button, light);
     return !button ?  (<>
     <div className={`fixed flex align-center h-full w-full inset-0 grid place-content-center ${className}`} {...props}>
         <div

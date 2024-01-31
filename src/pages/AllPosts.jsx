@@ -3,6 +3,7 @@ import dbService from "../firebase/DatabaseServices";
 import PostCard from "../components/PostCard";
 import Container from "../components/Container";
 import DataLoader from "../components/DataLoader";
+import PageLoader from "../components/PageLoader";
 
 function AllPosts() {
   const [posts, setPosts] = useState(null);
@@ -24,7 +25,7 @@ function AllPosts() {
         <h2 className="text-4xl font-bold mb-5">All Blogs</h2>
         <div className="flex gap-4">
           {dataLoading ? (
-            <DataLoader />
+            <PageLoader />
           ) : (
             posts &&
             posts.map((post) => (

@@ -3,6 +3,7 @@ import dbService from "../firebase/DatabaseServices";
 import PostCard from "../components/PostCard";
 import Container from "../components/Container";
 import DataLoader from "../components/DataLoader";
+import PageLoader from "../components/PageLoader";
 
 function Home() {
   const [posts, setPosts] = useState(null);
@@ -21,7 +22,6 @@ function Home() {
       "desc",
       3
     );
-    console.log("all post res ", allPosts);
     if (allPosts) {
       setPosts(allPosts);
       setDataLoading(false);
@@ -36,7 +36,10 @@ function Home() {
         <h2 className="text-4xl font-bold mb-5">Recent Blogs</h2>
         <div className="flex flex-wrap gap-4 ">
           {dataLoading ? (
-            <DataLoader />
+            <>
+              {/* <DataLoader /> */}
+              <PageLoader />
+            </>
           ) : (
             posts &&
             posts.map((post) => (

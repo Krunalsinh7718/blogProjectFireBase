@@ -8,6 +8,7 @@ import Button from "./Button";
 import { useDispatch } from "react-redux";
 import { login } from "../store/authSlice";
 import { toast } from "react-toastify";
+import BtnLoader from "./BtnLoader";
 
 function SignupForm() {
   const {
@@ -94,9 +95,7 @@ function SignupForm() {
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </span>
-           
-              <DataLoader button light className={`${!dataLoading ? 'invisible' : 'visible'} absolute inset-0 m-auto`}/>
-           
+              <BtnLoader className={`${!dataLoading ? 'invisible' : 'visible'} absolute inset-0 m-auto`} />
           </Button>
         </div>
       </form>

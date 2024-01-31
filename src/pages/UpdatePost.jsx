@@ -6,6 +6,7 @@ import dbService from "../firebase/DatabaseServices";
 import { toast } from "react-toastify";
 import storageService from "../firebase/StorageServices";
 import DataLoader from "../components/DataLoader";
+import PageLoader from "../components/PageLoader";
 
 
 function UpdatePost() {
@@ -19,7 +20,6 @@ function UpdatePost() {
     setDataLoading(true);
     const blogSnp = await dbService.getBlog(params.slug);
     if(blogSnp.exists()) {
-      console.log("blogSnp ", blogSnp);
       const blogRowData = blogSnp.data();
       const imageURL = await storageService.getDownloadURL(blogRowData.blogImageRef);
       setBlog({...blogRowData , image : imageURL, docId : params.slug});
@@ -42,7 +42,7 @@ function UpdatePost() {
       </Container>
     </>
    ) : (
-    <DataLoader />
+    <PageLoader />
   );
 }
 
