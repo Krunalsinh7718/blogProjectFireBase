@@ -3,12 +3,12 @@ import "../assets/styles/page-loader.css";
 function PageLoader() {
   return (
     <>
-      <div class="dots">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
+      <div className="dots">
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
       </div>
       <svg xmlns="http://www.w3.org/2000/svg">
         <defs>

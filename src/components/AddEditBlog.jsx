@@ -8,10 +8,11 @@ import { useForm } from "react-hook-form";
 import Select from "./Select";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ErrorMessage } from "@hookform/error-message";
 import Button from "./Button";
 import BtnLoader from "./BtnLoader";
+import { setBlogs } from "../store/dbSlice";
 
 function AddEditBlog({ blog = null }) {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ function AddEditBlog({ blog = null }) {
   const [downloadUrl, setDownloadURL] = useState("");
   const [loadingState, setLoadingState] = useState(false);
   const userData = useSelector((state) => state.auth.userData);
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -83,6 +85,17 @@ function AddEditBlog({ blog = null }) {
     if (addBlogRes) {
       toast.success("Post added successfully.");
       navigate(`/blog/${blogSlug}`);
+      handleUpdatePost();
+      
+    }
+  };
+
+  const handleUpdatePost = async () => {
+    const allPosts = await dbService.getAllPosts();
+    if(allPosts){
+      dispatch(setBlogs(allPosts))
+    }else{
+      console.log("No post found");
     }
   };
 
