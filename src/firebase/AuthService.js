@@ -4,6 +4,7 @@ import conf from '../conf/conf';
 
 class AuthService {
     constructor() {
+        console.log("conf ", conf);
         this.app = initializeApp(conf);
         this.auth = getAuth();
         this.gAuthProvider = new GoogleAuthProvider();
