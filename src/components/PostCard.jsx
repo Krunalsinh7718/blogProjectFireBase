@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import storageService from "../firebase/StorageServices";
 import LazyImage from "./LazyImage";
+import { timeStamptToDDMMYY, timeStamptToDDMMYYHHMM} from "../util/common-functions"
 
-function PostCard({ slug, blogImageRef, title, className }) {
+function PostCard({ slug, blogImageRef, title, className, createdTime }) {
 
   const [imageUrl, setImageUrl] = useState();
 
@@ -27,8 +28,9 @@ function PostCard({ slug, blogImageRef, title, className }) {
             width={298}
             height={200}/>
         }
-        <div className="p-4">
+        <div className="p-4 flex flex-wrap justify-between items-center">
           <h1 className="text-lg font-semibold capitalize">{title}</h1>
+          <span className="text-xs">{createdTime ? timeStamptToDDMMYY(createdTime) : null }</span>
         </div>
       </div>
     </Link>

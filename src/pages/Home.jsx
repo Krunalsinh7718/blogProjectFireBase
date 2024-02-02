@@ -9,8 +9,13 @@ function Home() {
   const storePosts = useSelector((state) => state.db.blogs);
 
   useEffect(() => {
-    setPosts(storePosts);
-    // console.log(storePosts);
+    if(storePosts){
+      const copyArr = [...storePosts];
+      copyArr.sort(function(a,b){
+        return new Date(b.createdTime) - new Date(a.createdTime);
+      });
+      setPosts(copyArr.slice(0,3));
+    }
   }, [storePosts]);
 
   return posts && posts?.length !== 0 ? (
@@ -26,6 +31,7 @@ function Home() {
                 slug={post.slug}
                 title={post.title}
                 blogImageRef={post.blogImageRef}
+                createdTime={post.createdTime}
               />
             ))}
         </div>

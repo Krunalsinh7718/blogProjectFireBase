@@ -81,6 +81,7 @@ function AddEditBlog({ blog = null }) {
       blogImageRef: blogImageRef,
       isActive: data.isActive,
       userId: userData.auth.currentUser.uid,
+      createdTime : Date.now()
     });
     if (addBlogRes) {
       toast.success("Post added successfully.");
