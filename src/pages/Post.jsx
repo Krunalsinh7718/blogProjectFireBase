@@ -5,16 +5,18 @@ import parse from "html-react-parser";
 import DataLoader from "../components/DataLoader";
 import storageService from "../firebase/StorageServices";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Container from "../components/Container";
 import LazyImage from "../components/LazyImage";
 import PageLoader from "../components/PageLoader";
+import { deleteBlog } from "../store/dbSlice";
 
 function Post() {
   const [blogData, setBlogData] = useState(null);
   const userData = useSelector((state) => state.auth.userData);
   const navigate = useNavigate();
   const [dataLoading, setDataLoading] = useState(null);
+  const dispatch = useDispatch();
 
   const param = useParams();
 
@@ -40,10 +42,17 @@ function Post() {
   };
 
   const deleteDocument = async () => {
-    const deleteBlogRes = await dbService.deleteBlog(blogData.slug);
-    if (deleteBlogRes) {
-      toast.success("Document deleted successfully.");
-      navigate("/");
+    
+    const fileDelRef = await storageService.deleteFile(
+      blogData.blogImageRef
+    );
+    if (fileDelRef) {
+      const deleteBlogRes = await dbService.deleteBlog(blogData.slug);
+      if (deleteBlogRes) {
+        dispatch(deleteBlog(blogData.slug))
+        toast.success("Document deleted successfully.");
+        navigate("/");
+      }
     }
   };
   useEffect(() => {

@@ -30,11 +30,11 @@ class StorageServices {
         try {
             const desertRef = ref(this.storage, filePath);
 
-            const deleteFileRes = deleteObject(desertRef)
+            const deleteFileRes = await deleteObject(desertRef)
 
             console.log(" deleteFileRes :", deleteFileRes);
 
-            return deleteFileRes;
+            return true;
         } catch (error) {
             console.error("Error delete file: ", error);
             return false;

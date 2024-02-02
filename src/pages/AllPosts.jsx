@@ -10,15 +10,15 @@ function AllPosts() {
   
   useEffect(() => {
     setPosts(storePosts);
-    console.log(storePosts);
   }, [storePosts])
 
-  return (
+  return posts && posts?.length !== 0 ? (
     <>
       <Container>
         <h2 className="text-4xl font-bold mb-5">Recent Blogs</h2>
         <div className="flex flex-wrap gap-4 ">
-          {posts && 
+          {posts &&
+            posts?.length !== 0 &&
             posts.map((post) => (
               <PostCard
                 key={post.slug}
@@ -28,16 +28,18 @@ function AllPosts() {
               />
             ))}
         </div>
-        <div className="flex justify-center">
-          {(posts?.length === 0 || !posts) && (
-            <h2 className="p-5 text-center text-2xl font-semibold text-red-600">
-              No post found.
-            </h2>
-          )}
-        </div>
+        
       </Container>
     </>
-  );
+  ): (
+    <Container>
+      <div className="flex justify-center">
+        <h2 className="p-5 text-center text-2xl font-semibold text-red-600">
+          No post found.
+        </h2>
+      </div>
+    </Container>
+  );;
 }
 
 export default AllPosts;

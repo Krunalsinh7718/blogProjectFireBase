@@ -22,7 +22,7 @@ function PostCard({ slug, blogImageRef, title, className }) {
         {
           imageUrl &&
           <LazyImage src={imageUrl}
-            alt="sdf"
+            alt="Blog Image"
             className="h-[200px] w-full object-cover" 
             width={298}
             height={200}/>

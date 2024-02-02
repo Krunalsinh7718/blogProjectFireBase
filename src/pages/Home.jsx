@@ -10,7 +10,7 @@ function Home() {
 
   useEffect(() => {
     setPosts(storePosts);
-    console.log(storePosts);
+    // console.log(storePosts);
   }, [storePosts]);
 
   return posts && posts?.length !== 0 ? (
@@ -32,11 +32,13 @@ function Home() {
       </Container>
     </>
   ) : (
+    <Container>
     <div className="flex justify-center">
       <h2 className="p-5 text-center text-2xl font-semibold text-red-600">
         No post found.
       </h2>
     </div>
+    </Container>
   );
 }
 

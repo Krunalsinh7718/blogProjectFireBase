@@ -10,6 +10,7 @@ import PageLoader from './components/PageLoader';
 import dbService from './firebase/DatabaseServices';
 import { login, logout } from "./store/authSlice";
 import { setBlogs } from './store/dbSlice';
+import { toast } from 'react-toastify';
 
 
 function App() {
@@ -21,11 +22,10 @@ function App() {
   const getPosts = async () => {
     setPageLoading(true);
     const allPosts = await dbService.getAllPosts();
-    // console.log("all post res ", allPosts);
     if(allPosts){
       dispatch(setBlogs(allPosts))
     }else{
-      console.log("No post found");
+      toast.error("No post found");
     }
     setPageLoading(false);
   };
@@ -34,7 +34,7 @@ function App() {
     let unsubscribe = onAuthStateChanged(auth.auth, (user) => {
       if (user) {
         dispatch(login(user));
-        getPosts();
+        
         setPageLoading(false);
       } else {
         dispatch(logout())
@@ -43,6 +43,10 @@ function App() {
     })
     return () => unsubscribe();
   }, [])
+
+  useEffect(() => {
+    getPosts();
+  },[])
 
   return (
     <>

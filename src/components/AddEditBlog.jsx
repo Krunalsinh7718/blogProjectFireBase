@@ -95,7 +95,7 @@ function AddEditBlog({ blog = null }) {
     if(allPosts){
       dispatch(setBlogs(allPosts))
     }else{
-      console.log("No post found");
+      toast.error("No post found");
     }
   };
 
