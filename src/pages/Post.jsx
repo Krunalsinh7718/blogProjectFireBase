@@ -33,10 +33,10 @@ function Post() {
         setBlogData({ ...blogRowData, image: imageURL });
       } else {
         toast.error("Something went wrong.");
-        navigate("/");
+        navigate("/blogprojectfirebase/");
       }
     } else {
-      navigate("/");
+      navigate("/blogprojectfirebase/");
     }
     setDataLoading(false);
   };
@@ -51,7 +51,7 @@ function Post() {
       if (deleteBlogRes) {
         dispatch(deleteBlog(blogData.slug))
         toast.success("Document deleted successfully.");
-        navigate("/");
+        navigate("/blogprojectfirebase/");
       }
     }
   };

@@ -13,7 +13,7 @@ function LogoutBtn() {
     .then( () => {
       toast.success("Logout successfully.");
       dispatch(logout());
-      navigate("/signin")
+      navigate("/blogprojectfirebase/signin")
 
     })
     .catch(error => console.log("error >> logoutButton >> authServiceLogout : ", error))
