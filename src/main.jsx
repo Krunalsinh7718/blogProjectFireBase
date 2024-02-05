@@ -18,35 +18,35 @@ import AllPosts from './pages/AllPosts.jsx'
 
 const routes = createBrowserRouter([
   {
-    path: "/blogprojectfirebase/",
+    path: "/",
     element: <App />,
     children: [
       {
-        path: "/blogprojectfirebase/",
+        path: "/",
         element: <Home />
       },
       {
-        path: "/blogprojectfirebase/signup",
+        path: "/signup",
         element: <AuthLayout authentication={false}><SignUp /></AuthLayout>
       },
       {
-        path: "/blogprojectfirebase/signin",
+        path: "/signin",
         element: <AuthLayout authentication={false}><SignIn /></AuthLayout>
       },
       {
-        path: "/blogprojectfirebase/add-blog",
+        path: "/add-blog",
         element: <AuthLayout authentication={true}><AddPost /></AuthLayout>
       },
       {
-        path: "/blogprojectfirebase/all-blogs",
+        path: "/all-blogs",
         element: <AuthLayout authentication={true}><AllPosts /></AuthLayout>
       },
       {
-        path: "/blogprojectfirebase/blog/:slug",
+        path: "/blog/:slug",
         element: <AuthLayout authentication={true}> <Post /> </AuthLayout>
       },
       {
-        path: "/blogprojectfirebase/update-blog/:slug",
+        path: "/update-blog/:slug",
         element: <AuthLayout authentication={true}> <UpdatePost /> </AuthLayout>
       }
     ]

@@ -18,7 +18,7 @@ function PostCard({ slug, blogImageRef, title, className, createdTime }) {
   }, [])
 
   return (<>
-    <Link to={`/blogprojectfirebase/blog/${slug}`}>
+    <Link to={`/blog/${slug}`}>
       <div className={`w-[300px] border shadow rounded-md hover:shadow-lg bg-white overflow-hidden ${className}`}>
         {
           imageUrl &&

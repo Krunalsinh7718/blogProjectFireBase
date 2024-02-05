@@ -16,7 +16,7 @@ function SignIn() {
                 Want to account?
                 <Link
                   className="font-medium text-black   transition-all duration-200 hover:underline ml-2"
-                  to="/blogprojectfirebase/signup"
+                  to="/signup"
                 >
                   Sign Up
                 </Link>

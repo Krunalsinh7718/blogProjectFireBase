@@ -9,9 +9,9 @@ function AuthLayout({ children, authentication = true }) {
 
     useEffect(() => {
         if (authentication && authStatus !== authentication) {
-            navigate("/blogprojectfirebase/signin");
+            navigate("/signin");
         } else if (!authentication && authStatus !== authentication) {
-            navigate("/blogprojectfirebase/");
+            navigate("/");
         }
         setLoader(false);
     }, [authStatus, navigate, authentication])

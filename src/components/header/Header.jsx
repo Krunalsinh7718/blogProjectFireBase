@@ -13,17 +13,17 @@ function Header() {
   const navItems = [
     {
       name: "Home",
-      slug: "/blogprojectfirebase/",
+      slug: "/",
       allow: true,
     },
     {
       name: "All Blogs",
-      slug: "/blogprojectfirebase/all-blogs",
+      slug: "/all-blogs",
       allow: authStatus,
     },
     {
       name: "Add Blog",
-      slug: "/blogprojectfirebase/add-blog",
+      slug: "/add-blog",
       allow: authStatus,
     },
   ];
@@ -35,7 +35,7 @@ function Header() {
           <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
             <div className="inline-flex items-center space-x-2">
               <span>
-                <Link to="/blogprojectfirebase/">
+                <Link to="/">
                   <Logo />
                 </Link>
               </span>
@@ -50,7 +50,7 @@ function Header() {
                   item.allow ? (
                     <li key={item.name}>
                       <NavLink
-                        to={`/blogprojectfirebase/${item.slug}`}
+                        to={`${item.slug}`}
                         className={({ isActive }) =>
                           isActive
                             ? "active text-sm font-semibold text-blue-600 py-2 border-b-2 border-blue-600 border-dotted"
@@ -70,7 +70,7 @@ function Header() {
                   <button
                     type="button"
                     className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                    onClick={() => navigate("/blogprojectfirebase/signin")}
+                    onClick={() => navigate("/signin")}
                   >
                     Login
                   </button>
@@ -84,7 +84,7 @@ function Header() {
                 <button
                   type="button"
                   className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                  onClick={() => navigate("/blogprojectfirebase/signin")}
+                  onClick={() => navigate("/signin")}
                 >
                   Login
                 </button>

@@ -16,7 +16,7 @@ function SignUp() {
                 Already have an account?
                 <Link
                   className="font-medium text-black transition-all duration-200 hover:underline ml-2"
-                  to="/blogprojectfirebase/signin"
+                  to="/signin"
                 >
                   Sign In
                 </Link>
