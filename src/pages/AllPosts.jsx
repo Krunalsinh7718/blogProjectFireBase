@@ -9,7 +9,9 @@ function AllPosts() {
   const storePosts = useSelector(state => state.db.blogs)
   
   useEffect(() => {
-    setPosts(storePosts);
+    if(storePosts){
+      setPosts(storePosts);
+    }
   }, [storePosts])
 
   return posts && posts?.length !== 0 ? (
@@ -17,8 +19,7 @@ function AllPosts() {
       <Container>
         <h2 className="text-4xl font-bold mb-5">Recent Blogs</h2>
         <div className="flex flex-wrap gap-4 ">
-          {posts &&
-            posts?.length !== 0 &&
+          {
             posts.map((post) => (
               <PostCard
                 key={post.slug}

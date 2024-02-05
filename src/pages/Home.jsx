@@ -23,8 +23,7 @@ function Home() {
       <Container>
         <h2 className="text-4xl font-bold mb-5">Recent Blogs</h2>
         <div className="flex flex-wrap gap-4 ">
-          {posts &&
-            posts?.length !== 0 &&
+          {
             posts.map((post) => (
               <PostCard
                 key={post.slug}
