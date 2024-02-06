@@ -1,6 +1,7 @@
 import {Link} from "react-router-dom";
 import SignupForm from "../components/SignupForm";
 import LazyImage from "../components/LazyImage";
+import authBgImg from "../assets/images/auth-page-img.jpg";
  
 
 function SignUp() {
@@ -27,7 +28,7 @@ function SignUp() {
           <div className="h-full w-full auth-img">
            
           <LazyImage
-              src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80"
+              src={authBgImg}
               alt="Blog Image"
               className="mx-auto h-full w-full object-cover"
               width={832}

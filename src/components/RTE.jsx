@@ -31,7 +31,7 @@ function RTE({
                                 'searchreplace visualblocks code fullscreen',
                                 'insertdatetime media table paste code help wordcount'
                             ],
-                            toolbar: 'undo redo | formatselect | ' +
+                            toolbar: 'undo redo | h1 h2 h3 h4 | formatselect | ' +
                                 'bold italic backcolor | alignleft aligncenter ' +
                                 'alignright alignjustify | bullist numlist outdent indent | ' +
                                 'removeformat | help',

@@ -12,8 +12,8 @@ function SignIn() {
               <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl">
                 Sign in
               </h2>
-              <p className="mt-2 text-base text-gray-600 mb-4">
-                Want to account?
+              <p className="mt-2 text-sm text-gray-600 mb-4">
+              Don&#x27;t have an account?
                 <Link
                   className="font-medium text-black   transition-all duration-200 hover:underline ml-2"
                   to="/signup"
