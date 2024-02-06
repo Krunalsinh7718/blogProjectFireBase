@@ -135,8 +135,8 @@ function AddEditBlog({ blog = null }) {
                     {...register("title", {
                       required: "This is required",
                       maxLength: {
-                        value: 50,
-                        message: "Maximum length of name is 50.",
+                        value: 100,
+                        message: "Maximum length of name is 100.",
                       },
                     })}
                   />
@@ -151,7 +151,7 @@ function AddEditBlog({ blog = null }) {
                     {...register("slug", {
                       required: "This is required",
                       maxLength: {
-                        value: 50,
+                        value: 100,
                         message: "Maximum length of name is 50.",
                       },
                     })}

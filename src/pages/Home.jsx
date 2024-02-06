@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 
 function Home() {
   const [posts, setPosts] = useState(null);
-
   const storePosts = useSelector((state) => state.db.blogs);
 
   useEffect(() => {
