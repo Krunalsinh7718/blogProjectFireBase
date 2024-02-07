@@ -11,6 +11,7 @@ function RTE({
     className,
     ...props
 }) {
+    const characterAllow = 3000;
     const [blogCharLength, setBlogCharLength] = useState(defaultValue.length || 0);
 
     const handleInit = (evt, editor) => {
@@ -20,7 +21,6 @@ function RTE({
     const handleCountUpdate = (value, editor) => {
         const dataTextLength = editor.getContent({ format: "text" }).length;
         setBlogCharLength(dataTextLength);
-
     };
 
     return (<>
@@ -30,7 +30,6 @@ function RTE({
                 <Controller
                     name={name || "Content"}
                     control={control}
-                    rules={{ required: "This is required." }}
                     render={({ field: { onChange } }) => (
                         <>
                             <Editor
@@ -38,7 +37,6 @@ function RTE({
                                 apiKey={conf.tinymiceApiKey}
                                 init={{
                                     height: 500,
-                                    menubar: false,
                                     plugins: [
                                         'advlist autolink lists link image charmap print preview anchor',
                                         'searchreplace visualblocks code fullscreen',
@@ -50,16 +48,25 @@ function RTE({
                                         'removeformat | help',
                                     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                                 }}
-                                onEditorChange={(event, editor) => {
-                                    onChange();
-                                    handleCountUpdate(event, editor);
+                                onEditorChange={(updatedText, editor) => {
+                                    onChange(updatedText);
+                                    handleCountUpdate(updatedText, editor);
                                 }}
                                 onInit={handleInit}
 
                             />
-                            <p className="text-right">{blogCharLength}</p>
+                            <div className="flex justify-between flex-wrap">
+                                <span className="text-slate-300">Maximum {characterAllow} character allowed</span>
+                                <p className="text-right">Character Count : {blogCharLength}</p>
+                            </div>
                         </>
-                    )} />
+                    )} 
+                    rules={{ required: "This is required", maxLength: {
+                        value: characterAllow,
+                        message: `Maximum length is ${{characterAllow}}.`,
+                      }, }}
+                    
+                />
             </div>
         </div>
     </>);

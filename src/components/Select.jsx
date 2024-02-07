@@ -17,7 +17,7 @@ function Select({
                     id={id}
                     ref={ref}
                     {...props}>
-                    {options.map(e => <option key={e} value={e}>{e}</option>)}
+                    {options.map(e => <option key={e} value={e}>{e.toUpperCase()}</option>)}
                 </select>
             </div>
         </div>

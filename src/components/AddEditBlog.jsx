@@ -87,7 +87,8 @@ function AddEditBlog({ blog = null }) {
       toast.success("Post added successfully.");
       navigate(`/blog/${blogSlug}`);
       handleUpdatePost();
-      
+    }else{  
+      toast.error("Something went wrong");
     }
   };
 
