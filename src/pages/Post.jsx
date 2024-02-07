@@ -12,6 +12,7 @@ import PageLoader from "../components/PageLoader";
 import { deleteBlog } from "../store/dbSlice";
 import BlogEditBtn from "../components/blog/BlogEditBtn";
 import BlogDeleteBtn from "../components/blog/BlogDeleteBtn";
+import BlogLikeBtn from "../components/blog/BlogLikeBtn";
 
 function Post() {
   const [blogData, setBlogData] = useState(null);
@@ -75,17 +76,29 @@ function Post() {
           />
           {/* <img src={blogData.image} alt="Blog Image" className="w-full" height={427} width={640} style={{objectFit: "cover"}}/> */}
           {blogData?.userId === userData.auth.currentUser.uid && (
-            <div
-              className="absolute right-10 top-10 flex gap-2"
+            <>
+              <div
+                className="absolute right-10 top-10 flex gap-2"
+                style={{
+                  backgroundColor: "#ffffff5e",
+                  padding: "5px",
+                  borderRadius: "30px",
+                }}
+              >
+                <BlogEditBtn  onClick={() => navigate(`/update-blog/${param.slug}`)} />
+                <BlogDeleteBtn onClick={deleteDocument} />
+              </div>
+              <div
+              className="absolute left-8 bottom-8 flex gap-2"
               style={{
                 backgroundColor: "#ffffff5e",
                 padding: "5px",
                 borderRadius: "30px",
               }}
             >
-              <BlogEditBtn  onClick={() => navigate(`/update-blog/${param.slug}`)} />
-              <BlogDeleteBtn onClick={deleteDocument} />
+              <BlogLikeBtn />
             </div>
+            </>
           )}
         </div>
 
