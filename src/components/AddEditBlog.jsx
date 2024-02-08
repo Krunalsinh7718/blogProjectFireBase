@@ -74,14 +74,15 @@ function AddEditBlog({ blog = null }) {
   };
 
   const handleUpdateBlog = async (data, blogSlug, blogImageRef) => {
-    const addBlogRes = await dbService.addBlog({
+    const addBlogRes = await dbService.addUpdateBlog({
       title: data.title,
       slug: blogSlug,
       content: data.content,
       blogImageRef: blogImageRef,
       isActive: data.isActive,
       userId: userData.auth.currentUser.uid,
-      createdTime : Date.now()
+      createdTime : Date.now(),
+      liked: false
     });
     if (addBlogRes) {
       toast.success("Post added successfully.");

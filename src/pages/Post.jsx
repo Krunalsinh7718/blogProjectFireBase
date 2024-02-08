@@ -85,21 +85,23 @@ function Post() {
                   borderRadius: "30px",
                 }}
               >
-                <BlogEditBtn  onClick={() => navigate(`/update-blog/${param.slug}`)} />
+                <BlogEditBtn
+                  onClick={() => navigate(`/update-blog/${param.slug}`)}
+                />
                 <BlogDeleteBtn onClick={deleteDocument} />
               </div>
-              <div
-              className="absolute left-8 bottom-8 flex gap-2"
-              style={{
-                backgroundColor: "#ffffff5e",
-                padding: "5px",
-                borderRadius: "30px",
-              }}
-            >
-              <BlogLikeBtn />
-            </div>
             </>
           )}
+          <div
+            className="absolute left-8 bottom-8 flex gap-2"
+            style={{
+              backgroundColor: "#ffffff5e",
+              padding: "5px",
+              borderRadius: "30px",
+            }}
+          >
+            <BlogLikeBtn data={blogData}/>
+          </div>
         </div>
 
         <hr className="mb-4" />

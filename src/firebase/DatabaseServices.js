@@ -8,24 +8,13 @@ class DatabaseServices {
         this.db = getFirestore(this.app);
     }
 
-    async addBlog(blog) {
+    async addUpdateBlog(blog) {
         try {
             const blogsRef = doc(this.db, "blogs", blog.slug);
             const blogRes = await setDoc(blogsRef, blog );
             return true;
         } catch (e) {
             console.error("Error add document: ", e);
-            return false;
-        }
-    }
-
-    async updateBlog(docId, blog){
-        try {
-            const blogDocRef = doc(this.db, "blogs", docId);
-            await setDoc(blogDocRef, blog);
-            return true;
-        } catch (error) {
-            console.error("Error update document: ", error);
             return false;
         }
     }
