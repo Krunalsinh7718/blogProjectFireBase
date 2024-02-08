@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import LogoutBtn from "./LogoutBtn";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import "../../assets/styles/header.css"
+import "./header.css";
 
 function Header() {
   const navigate = useNavigate();
