@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, updateProfile  } from "firebase/auth";
 import conf from '../conf/conf';
 
 class AuthService {
@@ -42,7 +42,7 @@ class AuthService {
             return await signOut(this.auth);
 
         } catch (error) {
-            console.log("Auth >> signInUser >> ", error);
+            console.log("Auth >> logout user >> ", error);
             return false;
         }
 
@@ -69,6 +69,21 @@ class AuthService {
                 console.log("login with google >> error code : ", errorCode, ", errorMessage : ", errorMessage, ", email : ", email, ", cred :", credential);
             });
 
+    }
+
+    async updateUserProfile(dataToUpdate){
+        try {
+            const updateResponse = await updateProfile(this.auth.currentUser, dataToUpdate);
+            if(updateResponse){
+                console.log("update true response ", updateResponse);
+            }else{
+                console.log("update false response ", updateResponse);
+            }
+            return true;
+        } catch (error) {
+            console.log("Auth >> update profile  >> ", error);
+            return true;
+        }
     }
 
 

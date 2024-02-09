@@ -3,20 +3,27 @@ import "./post.css";
 import { explode1 } from "./animationFunctions";
 import dbService from "../../firebase/DatabaseServices";
 import { toast } from "react-toastify";
+import auth from "../../firebase/AuthService";
+import { useSelector } from "react-redux";
 
 function BlogLikeBtn({ data }) {
   const [like, dispatch] = useReducer( (state, event) => {
     // console.log({...data, liked : await state});
-    // // const addBlogRes = await dbService.addUpdateBlog({...data, liked : state});
-    // // if (addBlogRes) {
-    // //   explode1(event);
-    // //   console.log("success");
-    // // } else {
-    // //   toast.error("Something went wrong");
-    // // }
-   console.log(state);
+  //   const addBlogRes = dbService.addUpdateBlog({...data, liked : state})
+  //   if (addBlogRes) {
+  //     explode1(event);
+  //   } else {
+  //     toast.error("Something went wrong");
+  //   }
+  //  console.log(state);
     return !state;
   }, false);
+
+  const userData = useSelector(state => state.auth.userData)
+  const handleUpdateProfile = () => {
+    // console.log(userData.auth.currentUser);
+    auth.updateUserProfile({displayname : "abc"})
+  }
 
   return (
     <>
@@ -25,7 +32,7 @@ function BlogLikeBtn({ data }) {
           like ? "post-liked" : ""
         }`}
         title="Edit"
-        onClick={dispatch}
+        onClick={handleUpdateProfile}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
