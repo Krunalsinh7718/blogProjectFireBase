@@ -61,6 +61,42 @@ class DatabaseServices {
             return false;
         }
     }
+
+    async addUpdateLike(likeInfo, likeId) {
+        try {
+            const likesRef = doc(this.db, "blogLikes", likeId);
+            const likesRes = await setDoc(likesRef, likeInfo );
+            return true;
+        } catch (e) {
+            console.error("Error add update likes  document: ", e);
+            return false;
+        }
+    }
+
+    async getLikeInfo(likeId){
+        try {
+            const docRef = doc(this.db, "blogLikes", likeId);
+            const docSnap = await getDoc(docRef);
+            return docSnap;
+        } catch (error) {
+            console.error("Error get like document: ", error);
+            return false;
+        }
+    }
+
+    async getAllLikesInfo(){
+        try {
+            const querySnapshot = await getDocs(collection(this.db, "blogLikes"));
+            let data = [];
+            querySnapshot.forEach((doc) => {
+                data.push(doc.data())
+            });
+            return data;
+        } catch (error) {
+            console.error("Error get all like  document: ", error);
+            return false;
+        }
+    }
 }
 
 const dbService = new DatabaseServices();

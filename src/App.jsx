@@ -9,7 +9,7 @@ import DataLoader from './components/DataLoader'
 import PageLoader from './components/PageLoader';
 import dbService from './firebase/DatabaseServices';
 import { login, logout } from "./store/authSlice";
-import { setBlogs } from './store/dbSlice';
+import { addLikes, setBlogs, setLikesInit } from './store/dbSlice';
 import { toast } from 'react-toastify';
 
 
@@ -30,6 +30,15 @@ function App() {
     setPageLoading(false);
   };
 
+  const getLikesInfo = async () => {
+    setPageLoading(true);
+    const allLikesInfo = await dbService.getAllLikesInfo();
+    if(allLikesInfo){
+      console.log("allLikesInfo", allLikesInfo);
+      dispatch(setLikesInit(allLikesInfo));
+    }
+  }
+
   useEffect(() => {
     let unsubscribe = onAuthStateChanged(auth.auth, (user) => {
       if (user) {
@@ -46,6 +55,7 @@ function App() {
 
   useEffect(() => {
     getPosts();
+    getLikesInfo();
   },[])
 
   return (
