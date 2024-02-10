@@ -112,13 +112,13 @@ function explode1(e) {
       color: ['#e84118', '#c23616', '#d63031', '#ff7675'][Math.floor(Math.random() * 3) + 1],
       opacity: r(0, 0.5, true),
       radius: 8,
-      friction: Math.random() > 0.5 ? 0.95 : 0.9,
+      friction: r(0.80, 0.95, true),
       yVel: 0,
       gravity: 0
     }
   }
 
-  for (var i = 0; i < 15; i++) {
+  for (var i = 0; i < 30; i++) {
     particles1.push(Particle1());
   }
   //render animation
@@ -136,7 +136,7 @@ function explode1(e) {
       if (e.opacity < 0) return;
       if (e.radius < 0) return;
       ctx1.globalAlpha = e.opacity;
-      drawHeart(ctx1, e.x, e.y, 0 , 0, 10, 10, e.color);
+      drawHeart(ctx1, e.x, e.y, 0 , 0, 8, 8, e.color);
     });
   }
   let animationLoop;

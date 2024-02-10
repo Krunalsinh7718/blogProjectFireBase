@@ -5,10 +5,11 @@ import dbService from "../../firebase/DatabaseServices";
 import { toast } from "react-toastify";
 import auth from "../../firebase/AuthService";
 import { useDispatch, useSelector } from "react-redux";
-import { addLikes } from "../../store/dbSlice";
+import { addLikes, updateLike } from "../../store/dbSlice";
 
 function BlogLikeBtn({ data }) {
   const dispatch = useDispatch();
+  const btnRef = useRef();
   // const [like, dispatch1] = useReducer( (state, event) => {
   //   // console.log({...data, liked : await state});
   // //   const addBlogRes = dbService.addUpdateBlog({...data, liked : state})
@@ -21,7 +22,7 @@ function BlogLikeBtn({ data }) {
   //   return !state;
   // }, false);
 
-  const [useLiked, setUserLiked] = useState(false);
+  const [userLiked, setUserLiked] = useState(false);
   const likesData = useSelector(state => state.db.likes);
 
   const userData = useSelector(state => state.auth.userData)
@@ -31,50 +32,67 @@ function BlogLikeBtn({ data }) {
     const index = arr.findIndex((e) => e === obj);
 
     if (index === -1) {
-        arr.push(obj);
+      arr.push(obj);
     } else {
-        arr[index] = obj;
+      arr[index] = obj;
     }
-}
+  }
 
-  const handleUpdateProfile = async () => {
-    const blogLikes = likesData.find(dataLike => dataLike.blog === data.slug);
-    const currentUserLiked = blogLikes.likes.every(likeUser => likeUser === currentUserId)
-    if(blogLikes){
-      
-      
-    }else{
-      const likeDetail = {blog : data.slug, likes : [currentUserId]};
+  const handleUpdateProfile = async (event) => {
+    console.log(event);
+    let blogLikes = likesData.find(dataLike => dataLike.blog === data.slug);
+    let currentUserLiked = blogLikes.likes.includes(currentUserId);
+    if (blogLikes) {
+      if (currentUserLiked) {
+        const updatedLikes = blogLikes.likes.filter(like => like !== currentUserId);
+        
+        const likeDetail = { blog: data.slug, likes: updatedLikes };
+        
+        const dataRes = await dbService.addUpdateLike(likeDetail, data.slug);
+        if (dataRes) {
+          dispatch(updateLike(likeDetail));
+        }
+      } else {
+        const updatedLikes = [...blogLikes.likes, currentUserId];
+        const likeDetail = { blog: data.slug, likes: updatedLikes };
+        
+        const dataRes = await dbService.addUpdateLike(likeDetail, data.slug);
+        if (dataRes) {
+          dispatch(updateLike(likeDetail));
+        }
+        explode1(event);
+      }
+    } else {
+      const likeDetail = { blog: data.slug, likes: [currentUserId] };
       const dataRes = await dbService.addUpdateLike(likeDetail, data.slug)
-      if(dataRes){
+      if (dataRes) {
         dispatch(addLikes(likeDetail));
       }
     }
-    
-  }
 
-
-  const checkUserLiked = () => {
-    const blogLikes = likesData.find(dataLike => dataLike.blog === data.slug);
-    if(blogLikes){
-      const checkUserLiked = blogLikes.likes.every(like => like === currentUserId);
-      return checkUserLiked;
-    }else{
-      return false;
-    }
   }
 
   useEffect(() => {
-    setUserLiked(checkUserLiked())
-  },[likesData])
+    const blogLikes = likesData.find(dataLike => dataLike.blog === data.slug);
+    if (blogLikes) {
+      const checkUserLiked = blogLikes.likes.includes(currentUserId);
+      if (checkUserLiked) {
+        setUserLiked(true);
+      } else {
+        setUserLiked(false)
+      }
+    } else {
+      return false;
+    }
+  }, [likesData])
 
   return (
     <>
       <button
-        className={`rounded-full bg-black h-10 w-10 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black grid place-items-center hover:bg-blue-600 shadow-xl post-like-btn ${
-          useLiked ? "post-liked" : ""
-        }`}
+        className={`rounded-full bg-black h-10 w-10 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black grid place-items-center  shadow-xl post-like-btn ${userLiked ? "post-liked" : ""
+          }`}
         title="Edit"
+        ref={btnRef}
         onClick={handleUpdateProfile}
       >
         <svg

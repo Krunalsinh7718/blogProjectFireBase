@@ -25,9 +25,18 @@ const dbSlice = createSlice({
         setLikesInit : (state, action) => {
             state.likes = action.payload
         },
+        updateLike : (state, action) => {
+            state.likes = state.likes.map( likeData => {
+                if(action.payload.blog === likeData.blog){
+                    return action.payload
+                }else{
+                    return likeData;
+                }
+            })
+        },
       
     }
 })
 
-export const { addBlogs, setBlogs, deleteBlog, addLikes, setLikesInit} = dbSlice.actions;
+export const { addBlogs, setBlogs, deleteBlog, addLikes, setLikesInit, updateLike} = dbSlice.actions;
 export default dbSlice.reducer;

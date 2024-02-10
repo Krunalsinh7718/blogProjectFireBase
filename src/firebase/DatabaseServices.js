@@ -63,9 +63,11 @@ class DatabaseServices {
     }
 
     async addUpdateLike(likeInfo, likeId) {
+        // console.log("likeInfo", likeInfo);
         try {
             const likesRef = doc(this.db, "blogLikes", likeId);
             const likesRes = await setDoc(likesRef, likeInfo );
+            // console.log("likesRes", likesRes);
             return true;
         } catch (e) {
             console.error("Error add update likes  document: ", e);

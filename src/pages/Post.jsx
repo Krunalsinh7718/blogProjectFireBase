@@ -25,7 +25,6 @@ function Post() {
 
   const getDocument = async () => {
     setDataLoading(true);
-
     const dataSnap = await dbService.getBlog(param.slug);
     if (dataSnap.exists()) {
       const blogRowData = dataSnap.data();
@@ -61,52 +60,58 @@ function Post() {
 
   return !dataLoading ? (
     <>
-      <div className="mx-auto  max-w-2xl px-3 pb-4">
-        <h1 className="text-3xl font-bold capitalize mb-5">
-          {blogData?.title}
-        </h1>
-        <div className="rounded-lg bg-gray-200 p-4 mx-auto  max-w-2xl relative mb-4">
-          <LazyImage
-            src={blogData?.image}
-            alt="Blog Image"
-            className="w-full"
-            height={427}
-            width={640}
-            style={{ objectFit: "cover" }}
-          />
-          {/* <img src={blogData.image} alt="Blog Image" className="w-full" height={427} width={640} style={{objectFit: "cover"}}/> */}
-          {blogData?.userId === userData.auth.currentUser.uid && (
-            <>
-              <div
-                className="absolute right-10 top-10 flex gap-2"
-                style={{
-                  backgroundColor: "#ffffff5e",
-                  padding: "5px",
-                  borderRadius: "30px",
-                }}
-              >
-                <BlogEditBtn
-                  onClick={() => navigate(`/update-blog/${param.slug}`)}
-                />
-                <BlogDeleteBtn onClick={deleteDocument} />
-              </div>
-            </>
-          )}
-          <div
-            className="absolute left-8 bottom-8 flex gap-2"
-            style={{
-              backgroundColor: "#ffffff5e",
-              padding: "5px",
-              borderRadius: "30px",
-            }}
-          >
-            <BlogLikeBtn data={blogData}/>
-          </div>
-        </div>
+      {
+        blogData ? (<div className="mx-auto  max-w-2xl px-3 pb-4">
+          <h1 className="text-3xl font-bold capitalize mb-5">
+            {blogData?.title}
+          </h1>
+          <div className="rounded-lg bg-gray-200 p-4 mx-auto  max-w-2xl relative mb-4">
+            <LazyImage
+              src={blogData?.image}
+              alt="Blog Image"
+              className="w-full"
+              height={427}
+              width={640}
+              style={{ objectFit: "cover" }}
+            />
+            {/* <img src={blogData.image} alt="Blog Image" className="w-full" height={427} width={640} style={{objectFit: "cover"}}/> */}
+            {blogData?.userId === userData.auth.currentUser.uid && (
+              <>
+                <div
+                  className="absolute right-10 top-10 flex gap-2"
+                  style={{
+                    backgroundColor: "#ffffff5e",
+                    padding: "5px",
+                    borderRadius: "30px",
+                  }}
+                >
+                  <BlogEditBtn
+                    onClick={() => navigate(`/update-blog/${param.slug}`)}
+                  />
+                  <BlogDeleteBtn onClick={deleteDocument} />
+                </div>
+              </>
+            )}
+            <div
+              className="absolute left-8 bottom-8 flex gap-2"
+              style={{
+                backgroundColor: "#ffffff5e",
+                padding: "5px",
+                borderRadius: "30px",
+              }}
+            >
+              {
+                blogData && <BlogLikeBtn data={blogData} />
+              }
 
-        <hr className="mb-4" />
-        <div>{parse(blogData?.content || "")}</div>
-      </div>
+            </div>
+          </div>
+
+          <hr className="mb-4" />
+          <div>{parse(blogData?.content || "")}</div>
+        </div>) : null
+      }
+
     </>
   ) : (
     <PageLoader />
