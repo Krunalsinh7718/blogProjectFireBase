@@ -9,7 +9,7 @@ import DataLoader from './components/DataLoader'
 import PageLoader from './components/PageLoader';
 import dbService from './firebase/DatabaseServices';
 import { login, logout } from "./store/authSlice";
-import { addLikes, setBlogs, setLikesInit } from './store/dbSlice';
+import { addLikes, setBlogs, setLikesInit, setRatingsInit } from './store/dbSlice';
 import { toast } from 'react-toastify';
 
 
@@ -36,6 +36,21 @@ function App() {
     if(allLikesInfo){
       console.log("allLikesInfo", allLikesInfo);
       dispatch(setLikesInit(allLikesInfo));
+      setPageLoading(false);
+    }else{
+      setPageLoading(false);
+    }
+  }
+
+  const getRatingsInfo = async () => {
+    setPageLoading(true);
+    const allRatingsInfo = await dbService.getAllRatingsInfo();
+    if(allRatingsInfo){
+      console.log("allRatingsInfo", allRatingsInfo);
+      dispatch(setRatingsInit(allRatingsInfo)); 
+      setPageLoading(false);
+    }else{
+      setPageLoading(false);
     }
   }
 
@@ -56,6 +71,7 @@ function App() {
   useEffect(() => {
     getPosts();
     getLikesInfo();
+    getRatingsInfo();
   },[])
 
   return (

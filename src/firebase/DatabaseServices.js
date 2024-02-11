@@ -99,6 +99,44 @@ class DatabaseServices {
             return false;
         }
     }
+
+    async addUpdateRating(ratingInfo, ratingId) {
+        // console.log("ratingInfo", ratingInfo);
+        try {
+            const ratingsRef = doc(this.db, "blogRatings", ratingId);
+            const ratingsRes = await setDoc(ratingsRef, ratingInfo );
+            // console.log("ratingsRes", ratingsRes);
+            return true;
+        } catch (e) {
+            console.error("Error add update ratings  document: ", e);
+            return false;
+        }
+    }
+
+    async getRatingInfo(ratingId){
+        try {
+            const docRef = doc(this.db, "blogRatings", ratingId);
+            const docSnap = await getDoc(docRef);
+            return docSnap;
+        } catch (error) {
+            console.error("Error get rating document: ", error);
+            return false;
+        }
+    }
+
+    async getAllRatingsInfo(){
+        try {
+            const querySnapshot = await getDocs(collection(this.db, "blogRatings"));
+            let data = [];
+            querySnapshot.forEach((doc) => {
+                data.push(doc.data())
+            });
+            return data;
+        } catch (error) {
+            console.error("Error get all rating  document: ", error);
+            return false;
+        }
+    }
 }
 
 const dbService = new DatabaseServices();

@@ -1,6 +1,6 @@
 {
   "name": "blogprojectfirebase",
-  "homepage" : "https://blogprojectfirebase.netlify.app/blogprojectfirebase/",
+  "homepage": "https://blogprojectfirebase.netlify.app/blogprojectfirebase/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -19,8 +19,10 @@
     "html-react-parser": "^5.0.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-feather": "^2.0.10",
     "react-hook-form": "^7.49.3",
     "react-lazy-load-image-component": "^1.6.0",
+    "react-rating": "^2.0.5",
     "react-redux": "^9.0.4",
     "react-router-dom": "^6.21.1",
     "react-toastify": "^9.1.3"

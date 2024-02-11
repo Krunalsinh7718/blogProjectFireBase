@@ -13,6 +13,7 @@ import { deleteBlog } from "../store/dbSlice";
 import BlogEditBtn from "../components/blog/BlogEditBtn";
 import BlogDeleteBtn from "../components/blog/BlogDeleteBtn";
 import BlogLikeBtn from "../components/blog/BlogLikeBtn";
+import BlogRating from "../components/blog/BlogRating";
 
 function Post() {
   const [blogData, setBlogData] = useState(null);
@@ -74,7 +75,6 @@ function Post() {
               width={640}
               style={{ objectFit: "cover" }}
             />
-            {/* <img src={blogData.image} alt="Blog Image" className="w-full" height={427} width={640} style={{objectFit: "cover"}}/> */}
             {blogData?.userId === userData.auth.currentUser.uid && (
               <>
                 <div
@@ -101,14 +101,14 @@ function Post() {
               }}
             >
               {
-                blogData && <BlogLikeBtn data={blogData} />
+                blogData && (<><BlogLikeBtn data={blogData} /> <BlogRating data={blogData}/></>)
               }
 
             </div>
           </div>
 
           <hr className="mb-4" />
-          <div>{parse(blogData?.content || "")}</div>
+          <div className="blog-content">{parse(blogData?.content || "")}</div>
         </div>) : null
       }
 

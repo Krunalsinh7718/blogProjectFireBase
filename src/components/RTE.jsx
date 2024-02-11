@@ -63,7 +63,7 @@ function RTE({
                     )} 
                     rules={{ required: "This is required", maxLength: {
                         value: characterAllow,
-                        message: `Maximum length is ${{characterAllow}}.`,
+                        message: `Maximum length is ${characterAllow}.`,
                       }, }}
                     
                 />

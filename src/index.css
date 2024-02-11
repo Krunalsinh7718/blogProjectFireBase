@@ -19,6 +19,18 @@ body{
     place-items: center;
     background: rgba(255, 255, 255, 0.161);
 }
+/* BEGIN : common css */
+.multiline-dotted-text{
+    --set-lines : 2;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-clamp: var(--set-lines);
+    -webkit-line-clamp: var(--set-lines);
+    -webkit-box-orient: vertical; 
+}
+/* END : common css */
+
 
 
 /* BEGIN : auth css */

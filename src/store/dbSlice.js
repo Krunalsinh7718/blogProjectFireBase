@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     blogs : [],
     likes : [],
-
+    ratings : []
 }
 
 const dbSlice = createSlice({
@@ -34,9 +34,25 @@ const dbSlice = createSlice({
                 }
             })
         },
+
+        addRatings : (state, action) => {
+            state.ratings = [...state.ratings, action.payload]
+        },
+        setRatingsInit : (state, action) => {
+            state.ratings = action.payload
+        },
+        updateRating : (state, action) => {
+            state.ratings = state.ratings.map( ratingData => {
+                if(action.payload.blog === ratingData.blog){
+                    return action.payload
+                }else{
+                    return ratingData;
+                }
+            })
+        }
       
     }
 })
 
-export const { addBlogs, setBlogs, deleteBlog, addLikes, setLikesInit, updateLike} = dbSlice.actions;
+export const { addBlogs, setBlogs, deleteBlog, addLikes, setLikesInit, updateLike, addRatings, setRatingsInit, updateRating} = dbSlice.actions;
 export default dbSlice.reducer;
