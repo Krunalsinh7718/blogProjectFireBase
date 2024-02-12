@@ -5,8 +5,9 @@ import LazyImage from "./LazyImage";
 import { timeStamptToDDMMYY, timeStamptToDDMMYYHHMM} from "../util/common-functions"
 import * as Icon from 'react-feather';
 import { useSelector } from "react-redux";
+import placeholderImage from "../assets/images/placeholder-card-img.svg";
 
-function PostCard({ slug, blogImageRef, title, className, createdTime }) {
+function PostCard({ slug, blogImageRef, title, className, createdTime, ...props }) {
 
   const [imageUrl, setImageUrl] = useState();
   const [blogLikes, setBlogLikes] = useState(null);
@@ -52,8 +53,8 @@ function PostCard({ slug, blogImageRef, title, className, createdTime }) {
 
   return (<>
     <Link to={`/blog/${slug}`}>
-      <div className={`w-[300px] border shadow rounded-md hover:shadow-lg bg-white overflow-hidden ${className}`}>
-        <LazyImage src={imageUrl}
+      <div className={`w-[300px] border shadow rounded-md hover:shadow-lg bg-white overflow-hidden app-blog-card ${className}`} {...props}>
+        <LazyImage src={imageUrl ? imageUrl : placeholderImage}
           alt="Blog Image"
           className="h-[200px] w-full object-cover" 
           width={298}
@@ -64,7 +65,7 @@ function PostCard({ slug, blogImageRef, title, className, createdTime }) {
             {
               blogLikes && 
               <span class="mb-2 mr-2 inline-block rounded-full bg-red-100 text-red-600 px-3 py-1 text-[10px] font-semibold flex gap-2 items-center">
-                <Icon.Heart height={12} width={12} />
+                <Icon.Heart  height={12} width={12} />
                 <span>{blogLikes}</span>
               </span>
             }
@@ -77,7 +78,7 @@ function PostCard({ slug, blogImageRef, title, className, createdTime }) {
             }
           </div>
           <h1 className="text-lg font-semibold capitalize multiline-dotted-text mb-2" title={title} style={{minHeight : "56px"}}>{title}</h1>
-              <span className="text-xs">{createdTime ? timeStamptToDDMMYY(createdTime) : null }</span>
+              <span className="text-xs flex gap-2 items-center text-slate-500"><Icon.Calendar height={12} width={12} /> <span>{createdTime ? timeStamptToDDMMYY(createdTime) : null }</span></span>
           
         </div>
       </div>

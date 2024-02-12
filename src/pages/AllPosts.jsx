@@ -20,12 +20,13 @@ function AllPosts() {
         <h2 className="text-4xl font-bold mb-5">Recent Blogs</h2>
         <div className="flex flex-wrap gap-4 ">
           {
-            posts.map((post) => (
+            posts.map((post, index) => (
               <PostCard
                 key={post.slug}
                 slug={post.slug}
                 title={post.title}
                 blogImageRef={post.blogImageRef}
+                style={{"--blog-card-animation-delay" : index / 3+"s"}}
               />
             ))}
         </div>

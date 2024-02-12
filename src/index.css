@@ -19,6 +19,23 @@ body{
     place-items: center;
     background: rgba(255, 255, 255, 0.161);
 }
+
+.app-blog-card{
+    --blog-card-animation-delay : 0ms;
+    opacity: 0;
+    animation: cardFateInTop 300ms ease-in-out forwards;
+    animation-delay: var(--blog-card-animation-delay);
+}
+@keyframes cardFateInTop{
+    from{
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to{
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
 /* BEGIN : common css */
 .multiline-dotted-text{
     --set-lines : 2;
@@ -47,3 +64,9 @@ body{
     }
 }
 /* END : auth css */
+
+/* BEGIN: tostify  */
+.Toastify__toast{
+    border-radius: 10px !important;
+}
+/* END: tostify  */

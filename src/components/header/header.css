@@ -1,4 +1,8 @@
 @media (max-width: 1023px) {
+  .app-logo{
+    width: 74px;
+    height: 25px;
+  }
   .res-menu-active {
     display: block !important;
   }
