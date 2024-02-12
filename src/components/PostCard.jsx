@@ -63,7 +63,7 @@ function PostCard({ slug, blogImageRef, title, className, createdTime, ...props 
           <div className="flex flex-wrap justify-between">
             {
               blogLikes && 
-              <span class="mb-2 mr-2 inline-block rounded-full bg-red-100 text-red-600 px-3 py-1 text-[10px] font-semibold flex gap-2 items-center">
+              <span className="mb-2 mr-2 inline-block rounded-full bg-red-100 text-red-600 px-3 py-1 text-[10px] font-semibold flex gap-2 items-center">
                 <Icon.Heart  height={12} width={12} />
                 <span>{blogLikes}</span>
               </span>
