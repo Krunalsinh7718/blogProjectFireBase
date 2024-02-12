@@ -15,6 +15,7 @@ import AddPost from './pages/AddPost.jsx'
 import Post from './pages/Post.jsx'
 import UpdatePost from './pages/UpdatePost.jsx'
 import AllPosts from './pages/AllPosts.jsx'
+import PageNotFound from './components/PageNotFound.jsx'
 
 const routes = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const routes = createBrowserRouter([
       {
         path: "/update-blog/:slug",
         element: <AuthLayout authentication={true}> <UpdatePost /> </AuthLayout>
+      },
+      {
+        path: "*",
+        element : <PageNotFound />
       }
     ]
   }

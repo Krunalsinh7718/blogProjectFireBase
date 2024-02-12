@@ -30,6 +30,7 @@ function SignupForm() {
         setDataLoading(false);
       }else{
         setDataLoading(false);
+        toast.error("Something went wrong.");
       }
     } catch (error) {
       setDataLoading(false);
@@ -75,7 +76,7 @@ function SignupForm() {
           </div>
           <Button
             type="submit"
-            className="h-14 h-14 inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80 relative"
+            className="h-12 inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80 relative"
             disabled={dataLoading}
           >
            

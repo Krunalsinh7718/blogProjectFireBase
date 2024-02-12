@@ -38,7 +38,6 @@ function PostCard({ slug, blogImageRef, title, className, createdTime, ...props 
     if(ratingsInfo){
       const blogHasRatings = ratingsInfo.find(blog => blog.blog === slug);
       if(blogHasRatings){
-        console.log(blogHasRatings.blog);
         const averageRating = blogHasRatings.rating.reduce(
             (accumulator, currentValue) => {
               return accumulator + currentValue.rating
@@ -71,7 +70,7 @@ function PostCard({ slug, blogImageRef, title, className, createdTime, ...props 
             }
             {
               blogAvgRating &&
-            <span class="mb-2 mr-2 inline-block rounded-full bg-amber-100 text-amber-600 px-3 py-1 text-[10px] font-semibold  flex gap-2 items-center">
+            <span className="mb-2 mr-2 inline-block rounded-full bg-amber-100 text-amber-600 px-3 py-1 text-[10px] font-semibold  flex gap-2 items-center">
               <Icon.Star height={12} width={12} />
               <span>{blogAvgRating}</span>
             </span>
