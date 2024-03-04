@@ -137,6 +137,19 @@ class DatabaseServices {
             return false;
         }
     }
+
+    async addUpdateRating(ratingInfo, ratingId) {
+        // console.log("ratingInfo", ratingInfo);
+        try {
+            const ratingsRef = doc(this.db, "blogRatings", ratingId);
+            const ratingsRes = await setDoc(ratingsRef, ratingInfo );
+            // console.log("ratingsRes", ratingsRes);
+            return true;
+        } catch (e) {
+            console.error("Error add update ratings  document: ", e);
+            return false;
+        }
+    }
 }
 
 const dbService = new DatabaseServices();

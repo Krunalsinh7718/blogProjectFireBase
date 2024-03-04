@@ -1,74 +1,93 @@
-
 import { useState } from "react";
 import Modal from "./Modal";
 import Select from "react-select";
-import CreatableSelect from 'react-select/creatable';
+import CreatableSelect from "react-select/creatable";
 import makeAnimated from "react-select/animated";
 import Button from "./Button";
 
 const animatedComponents = makeAnimated();
 
 function AddEditCategory() {
-  const [categoryModal, setCategoryModal] = useState(false);
-  
-
-  const options = [{ value: "uncategorized", label: "Uncategorized" }];
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  };
-
   const handleOnchange = (value) => {
-    console.log(value);
-  }
+    const newCategories = value.map((cate) => cate.label);
+  };
 
   return (
     <>
-      <button
-        type="button"
-        className="inline-flex items-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white hover:bg-black/80 mt-5"
-        onClick={() => setCategoryModal((state) => !state)}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <line x1="12" y1="5" x2="12" y2="19"></line>
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-        </svg>
-        Add Category
-      </button>
-      {categoryModal && (
-        <Modal
-          modalActive={categoryModal}
-          setCategoryModal={setCategoryModal}
-          title="Add Category"
-        >
-          <form submit={handleSubmit}>
-            <div className="flex gap-2">
-                <CreatableSelect 
-                components={animatedComponents}
-                closeMenuOnSelect={false}
-                defaultValue={options[0]}
-                isMulti
-                options={options}
-                className="flex-1"
-                onChange={handleOnchange}
-                />
-                <Button type={"submit"}>
-                    Submit
-                </Button>
+      <div className="tree-view-main">
+        <div className="node-container">
+          {/* BEGIN: level 1 */}
+          <div className="node-lv1-wrapper">
+            <div className="node-content node-lv-1">
+              <input type="checkbox" id="chk1" />
+              <label htmlFor="chk1">Item L1</label>
+              <div className="btn-box">
+                <button>+</button>
+                <button>+ &gt;</button>
+              </div>
             </div>
-          </form>
-        </Modal>
-      )}
+            {/* BEGIN: level 2 */}
+            <div className="node-container">
+              <div className="node-lv2-wrapper">
+                <div className="node-content node-lv-2">
+                  <input type="checkbox" id="chkl2a" />
+                  <label htmlFor="chkl2a">Item L2</label>
+                  <div className="btn-box">
+                    <button>+</button>
+                    <button>+ &gt;</button>
+                  </div>
+                </div>
+              </div>
+              <div className="node-lv2-wrapper">
+                <div className="node-content node-lv-2">
+                  <input type="checkbox" id="chkl2a" />
+                  <label htmlFor="chkl2a">Item L2</label>
+                  <div className="btn-box">
+                    <button>+</button>
+                    <button>+ &gt;</button>
+                  </div>
+                </div>
+                {/* BEGIN: level 3 */}
+                <div className="node-container">
+                  <div className="node-lv3-wrapper">
+                    <div className="node-content node-lv-3">
+                      <input type="checkbox" id="chkl3a" />
+                      <label htmlFor="chkl3a">Item L3</label>
+                      <div className="btn-box">
+                        <button>+</button>
+                        <button>+ &gt;</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="node-lv3-wrapper">
+                    <div className="node-content node-lv-3">
+                      <input type="checkbox" id="chkl3b" />
+                      <label htmlFor="chkl3b">Item L3</label>
+                      <div className="btn-box">
+                        <button>+</button>
+                        <button>+ &gt;</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="node-lv3-wrapper">
+                    <div className="node-content node-lv-3">
+                      <input type="checkbox" id="chkl3c" />
+                      <label htmlFor="chkl3c">Item L3</label>
+                      <div className="btn-box">
+                        <button>+</button>
+                        <button>+ &gt;</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* END: level 3 */}
+              </div>
+            </div>
+            {/* END: level 2 */}
+          </div>
+          {/* END: level 1 */}
+        </div>
+      </div>
     </>
   );
 }
