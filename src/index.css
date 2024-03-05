@@ -130,13 +130,14 @@ body{
 }
 
 .tree-view-main{
+    --item-left-margin: 46px;
     & .node-container{
         position: relative;
-        padding-left: 45px;
+        padding-left: var(--item-left-margin);
         display: flex;
         flex-direction: column;
         gap: 10px;
-        padding-block: 10px;
+        margin-top: 10px;
 
         &::before{
             content: "";
@@ -145,7 +146,7 @@ body{
             height: 100%;
             width: 1px;
             background-color: #000;
-            top: 0;
+            top: -10px;
             left: 10px;
         }
     }
@@ -165,7 +166,17 @@ body{
             aspect-ratio: 1;
             border-radius: 50%;
             background-color: #000;
-            left: -44px;
+            left: calc(var(--item-left-margin) * -0.98);
+        }
+        &:after{
+            content: "";
+            position: absolute;
+            display: block;
+            height: 1px;
+            width: var(--item-left-margin);
+            aspect-ratio: 1;
+            background-color: #000;
+            left:  calc(var(--item-left-margin) * -0.98);
         }
 
         & input{
@@ -182,12 +193,12 @@ body{
         }
         & button{
             height: 24px;
-            width: 24px;
             color: #fff;
             background-color: #000;
-            display: grid;
-            place-items: center;
+            display: flex;
+            align-items: center;
             border-radius: 3px;
+            padding: 8px 6px;
         }
     }
 }
