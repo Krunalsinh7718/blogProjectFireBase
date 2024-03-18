@@ -183,7 +183,7 @@ function AddEditBlog({ blog = null }) {
                   {...register("isActive")}
                 />
                 {blog?.image && <img src={blog.image} alt="Blog Image" />}
-                <div className="flex w-full items-center space-x-2">
+                {/* <div className="flex w-full items-center space-x-2">
                   <Select
                     label="Category"
                     options={categoryOption}
@@ -192,7 +192,6 @@ function AddEditBlog({ blog = null }) {
                     {...register("category")}
                   />
                   <div>
-                   {/* <AddEditCategory /> */}
                    <button
                       type="button"
                       className="inline-flex items-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white hover:bg-black/80 mt-5"
@@ -215,7 +214,7 @@ function AddEditBlog({ blog = null }) {
                       Add Category
                     </button>
                   </div>
-                </div>
+                </div> */}
                 <div className="col-span-2">
                   <RTE
                     label="Content"

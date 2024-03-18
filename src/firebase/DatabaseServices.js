@@ -139,14 +139,34 @@ class DatabaseServices {
     }
 
     async addUpdateRating(ratingInfo, ratingId) {
-        // console.log("ratingInfo", ratingInfo);
         try {
             const ratingsRef = doc(this.db, "blogRatings", ratingId);
             const ratingsRes = await setDoc(ratingsRef, ratingInfo );
-            // console.log("ratingsRes", ratingsRes);
             return true;
         } catch (e) {
             console.error("Error add update ratings  document: ", e);
+            return false;
+        }
+    }
+
+    async addCategories(categories, categoryId) {
+        try {
+            const categoriesRef = doc(this.db, "categories", categoryId);
+            const categoriesRes = await setDoc(categoriesRef, categories );
+            return true;
+        } catch (e) {
+            console.error("Error add Categories: ", e);
+            return false;
+        }
+    }
+
+    async getCategoriesInfo(categoryId){
+        try {
+            const docRef = doc(this.db, "categories", categoryId);
+            const docSnap = await getDoc(docRef);
+            return docSnap;
+        } catch (error) {
+            console.error("Error get categories document: ", error);
             return false;
         }
     }

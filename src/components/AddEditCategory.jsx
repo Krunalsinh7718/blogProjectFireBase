@@ -4,179 +4,33 @@ import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import makeAnimated from "react-select/animated";
 import Button from "./Button";
-
-const Node = ({ category, handlePushRemoveFromArray }) => (
-  <div className="node-content node-lv-1">
-    <span>{category.id}</span>
-    <div className="btn-box">
-      <button
-        onClick={() =>
-          handlePushRemoveFromArray(
-            category.id,
-            { id: category.id + Math.random() },
-            "add"
-          )
-        }
-      >
-        +
-      </button>
-      <button
-        onClick={() =>
-          handlePushRemoveFromArray(category.id, {
-            id: category.id + Math.random(),
-          })
-        }
-      >
-        -
-      </button>
-    </div>
-  </div>
-);
-
-function pushElementToChildById(arr, targetId, element) {
-  const tempArr = [...arr];
-  for (const item of tempArr) {
-    if (item.id === targetId) {
-      // If the item's ID matches the target ID, push the element into its children array
-      if (!item.children) {
-        item.children = [];
-      }
-      item.children.push(element);
-      return tempArr;
-    } else if (item.children) {
-      // If the item has children, recursively search through them
-      const childResult = pushElementToChildById(
-        item.children,
-        targetId,
-        element
-      );
-      if (childResult) {
-        return tempArr;
-      }
-    }
-  }
-  return false; // If the target ID is not found in the array
-}
-
-function removeElementToChildById(arr, targetId, element) {
-  const tempArr = [...arr];
-  for (const item of tempArr) {
-    if (item.id === targetId) {
-      // If the item's ID matches the target ID, push the element into its children array
-
-      return tempArr.filter((ele) => ele.id !== targetId);
-    } else if (item.children) {
-      // If the item has children, recursively search through them
-      const childResult = removeElementToChildById(
-        item.children,
-        targetId,
-        element
-      );
-      if (childResult) {
-        return tempArr;
-      }
-    }
-  }
-  return false; // If the target ID is not found in the array
-}
+import storageService from "appwrite/types/service";
 
 function AddEditCategory() {
-  const [category, setCategory] = useState([
-    {
-      id: "uncategorized",
-      children: [
-        {
-          id: "Item A1",
-          children: [
-            { id: "Item A1-a1" },
-            {
-              id: "Item A1-a2",
-              children: [
-                { id: "Item A1-a2-#1" },
-                { id: "Item A1-a2-#2" },
-                { id: "Item A1-a2-#3" },
-              ],
-            },
-          ],
-        },
-        { id: "Item A2" },
-        { id: "Item A3" },
-      ],
-    },
-  ]);
+  const [categories, seCategories] = useState();
 
-  const handlePushRemoveFromArray = (id, ele, action) => {
-    setCategory(
-      action === "add"
-        ? pushElementToChildById(category, id, ele)
-        : removeElementToChildById(category, id, ele)
-    );
-  };
-
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    
+    const cateRes = await storageService.AddEditCategory(categories);
+  }
   return (
     <>
-      <div className="tree-view-main">
-        <div className="node-container">
-          {category.map((categoryl1) => (
-            <div className="node-wrapper node-lv1-wrapper" key={categoryl1.id}>
-              <Node
-                category={categoryl1}
-                handlePushRemoveFromArray={handlePushRemoveFromArray}
-              />
-              {categoryl1.children ? (
-                <div className="node-container">
-                  {categoryl1.children.map((categoryl2) => (
-                    <div
-                      className="node-wrapper node-lv2-wrapper"
-                      key={categoryl2.id}
-                    >
-                      <Node
-                        category={categoryl2}
-                        handlePushRemoveFromArray={handlePushRemoveFromArray}
-                      />
-                      {categoryl2.children ? (
-                        <div className="node-container">
-                          {categoryl2.children.map((categoryl3) => (
-                            <div
-                              className="node-wrapper node-lv3-wrapper"
-                              key={categoryl3.id}
-                            >
-                              <Node
-                                category={categoryl3}
-                                handlePushRemoveFromArray={
-                                  handlePushRemoveFromArray
-                                }
-                              />
-
-                              {categoryl3.children ? (
-                                <div className="node-container">
-                                  {categoryl3.children.map((categoryl4) => (
-                                    <div
-                                      className="node-wrapper node-lv3-wrapper"
-                                      key={categoryl4.id}
-                                    >
-                                      <Node
-                                        category={categoryl4}
-                                        handlePushRemoveFromArray={
-                                          handlePushRemoveFromArray
-                                        }
-                                      />
-                                    </div>
-                                  ))}
-                                </div>
-                              ) : null}
-                            </div>
-                          ))}
-                        </div>
-                      ) : null}
-                    </div>
-                  ))}
-                </div>
-              ) : null}
-            </div>
-          ))}
+      <form onSubmit={handleSubmit}>
+        <div class="flex w-full items-center space-x-2">
+          <input
+            class="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+            type="text"
+            placeholder="Category"
+          />
+          <button
+            type="submit"
+            class="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+          >
+            Submit
+          </button>
         </div>
-      </div>
+      </form>
     </>
   );
 }
