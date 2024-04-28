@@ -15,7 +15,7 @@ class StorageServices {
 
             const uploadFileRes = await uploadBytes(storageRef, file)
 
-            console.log('Uploaded a blob or file! ', uploadFileRes);
+            // console.log('Uploaded a blob or file! ', uploadFileRes);
 
             return uploadFileRes.metadata.fullPath;
 
@@ -32,7 +32,7 @@ class StorageServices {
 
             const deleteFileRes = await deleteObject(desertRef)
 
-            console.log(" deleteFileRes :", deleteFileRes);
+            // console.log(" deleteFileRes :", deleteFileRes);
 
             return true;
         } catch (error) {

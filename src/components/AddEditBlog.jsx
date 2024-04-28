@@ -14,7 +14,6 @@ import Button from "./Button";
 import BtnLoader from "./BtnLoader";
 import { setBlogs } from "../store/dbSlice";
 import Modal from "./Modal";
-import AddEditCategory from "./AddEditCategory";
 
 function AddEditBlog({ blog = null }) {
   const navigate = useNavigate();
@@ -251,15 +250,7 @@ function AddEditBlog({ blog = null }) {
           </div>
         </div>
       </section>
-      {categoryModal && (
-        <Modal
-          modalActive={categoryModal}
-          setCategoryModal={setCategoryModal}
-          title="Add Category"
-        >
-          <AddEditCategory />
-        </Modal>
-      )}
+      
     </>
   );
 }

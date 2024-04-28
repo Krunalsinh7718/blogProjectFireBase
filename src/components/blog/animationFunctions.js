@@ -84,7 +84,7 @@ function drawHeart(ctx, fromx, fromy, tox, toy, lw, hlen, color) {
 }
 
 function explode1(e) {
-  console.log("function called");
+  // console.log("function called");
   //element required position
   const x = e.clientX;
   const y = e.clientY;

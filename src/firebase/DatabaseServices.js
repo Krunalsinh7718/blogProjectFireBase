@@ -23,7 +23,7 @@ class DatabaseServices {
         try {
             const blogDocRef = doc(this.db, "blogs", docId);
             const deleteDocRes =  await deleteDoc(blogDocRef);
-            console.log("deleteDocRes =>", deleteDocRes);
+            // console.log("deleteDocRes =>", deleteDocRes);
             return true;
         } catch (error) {
             console.error("Error delete document: ", error);

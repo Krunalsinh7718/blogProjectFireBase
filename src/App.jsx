@@ -34,7 +34,7 @@ function App() {
     setPageLoading(true);
     const allLikesInfo = await dbService.getAllLikesInfo();
     if(allLikesInfo){
-      console.log("allLikesInfo", allLikesInfo);
+      // console.log("allLikesInfo", allLikesInfo);
       dispatch(setLikesInit(allLikesInfo));
       setPageLoading(false);
     }else{
@@ -46,7 +46,7 @@ function App() {
     setPageLoading(true);
     const allRatingsInfo = await dbService.getAllRatingsInfo();
     if(allRatingsInfo){
-      console.log("allRatingsInfo", allRatingsInfo);
+      // console.log("allRatingsInfo", allRatingsInfo);
       dispatch(setRatingsInit(allRatingsInfo)); 
       setPageLoading(false);
     }else{

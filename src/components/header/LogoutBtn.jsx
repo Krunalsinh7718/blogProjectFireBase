@@ -19,7 +19,7 @@ function LogoutBtn() {
     })
     .catch(error => console.log("error >> logoutButton >> authServiceLogout : ", error))
   }
-  console.log(auth)
+  // console.log(auth)
     return (<>
            <button
               type="button"

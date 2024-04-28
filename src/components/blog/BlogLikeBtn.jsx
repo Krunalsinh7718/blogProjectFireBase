@@ -69,7 +69,7 @@ function BlogLikeBtn({ data }) {
         setUserLiked(false)
       }
     } else {
-      console.log("No blog likes found")
+      // console.log("No blog likes found")
     }
   }, [likesData])
 

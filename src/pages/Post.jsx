@@ -38,6 +38,7 @@ function Post() {
         toast.error("Something went wrong.");
         navigate("/");
       }
+      // console.log("blog data =>",blogData);
     } else {
       navigate("/");
     }
@@ -109,6 +110,8 @@ function Post() {
 
           <hr className="mb-4" />
           <div className="blog-content">{parse(blogData?.content || "")}</div>
+          <hr className="mb-4" />
+          <h4 class="text-2xl font-bold capitalize mb-5">blog 1</h4>
         </div>) : null
       }
 

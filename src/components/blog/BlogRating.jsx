@@ -32,7 +32,7 @@ function BlogRating({ data }) {
         let currentBlogRatingData = ratingsData.find(dataRating => dataRating.blog === data.slug);
         let currentUserRating = currentBlogRatingData?.rating.find(rating => rating.user === currentUserId);
         // console.log("currentBlogRatingData ", ratingsData[0].blog);
-        console.log("currentUserRating ", currentUserRating);
+        // console.log("currentUserRating ", currentUserRating);
         if (currentBlogRatingData) {
             if (currentUserRating) {
                 const updatedRatings = currentBlogRatingData.rating.map(mapRating => {
