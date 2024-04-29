@@ -22,4 +22,7 @@ function timeStamptToDDMMYY(timestamp){
     })
 }
 
-export {timeStamptToDDMMYYHHMM, timeStamptToDDMMYY}
+function getRandomNumber(){
+    return Math.floor(Math.random() * 1000) + '' + Date.now();
+}
+export {timeStamptToDDMMYYHHMM, timeStamptToDDMMYY, getRandomNumber}

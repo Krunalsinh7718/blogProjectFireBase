@@ -126,7 +126,6 @@ function AddEditBlog({ blog = null }) {
       <section>
         <div>
           <div>
-            {/* <button onClick={handleDownloadImage}>Get Image</button>{downloadUrl && (<> <img src={downloadUrl} alt="Image" /></> )} */}
             <h2 className="text-4xl font-bold mb-5 ">
               {blog ? "Update Blog" : "Add Blog"}
             </h2>

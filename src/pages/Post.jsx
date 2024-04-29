@@ -14,9 +14,11 @@ import BlogEditBtn from "../components/blog/BlogEditBtn";
 import BlogDeleteBtn from "../components/blog/BlogDeleteBtn";
 import BlogLikeBtn from "../components/blog/BlogLikeBtn";
 import BlogRating from "../components/blog/BlogRating";
+import UserComments from "../components/blog/UserComments";
 
 function Post() {
   const [blogData, setBlogData] = useState(null);
+  
   const userData = useSelector((state) => state.auth.userData);
   const navigate = useNavigate();
   const [dataLoading, setDataLoading] = useState(null);
@@ -56,14 +58,17 @@ function Post() {
       }
     }
   };
+
+ 
+
   useEffect(() => {
     getDocument();
   }, [param]);
 
   return !dataLoading ? (
     <>
-      {
-        blogData ? (<div className="mx-auto  max-w-2xl px-3 pb-4">
+      {blogData ? (
+        <div className="mx-auto  max-w-2xl px-3 pb-4">
           <h1 className="text-3xl font-bold capitalize mb-5">
             {blogData?.title}
           </h1>
@@ -101,20 +106,24 @@ function Post() {
                 borderRadius: "30px",
               }}
             >
-              {
-                blogData && (<><BlogLikeBtn data={blogData} /> <BlogRating data={blogData}/></>)
-              }
-
+              {blogData && (
+                <>
+                  <BlogLikeBtn data={blogData} /> <BlogRating data={blogData} />
+                </>
+              )}
             </div>
           </div>
 
           <hr className="mb-4" />
           <div className="blog-content">{parse(blogData?.content || "")}</div>
-          <hr className="mb-4" />
-          <h4 class="text-2xl font-bold capitalize mb-5">blog 1</h4>
-        </div>) : null
-      }
-
+          {
+            userData && (
+              <UserComments blogData={blogData} userData={userData}/>
+            )
+          }
+          
+        </div>
+      ) : null}
     </>
   ) : (
     <PageLoader />
