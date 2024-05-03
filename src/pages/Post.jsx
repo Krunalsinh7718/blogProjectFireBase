@@ -118,7 +118,7 @@ function Post() {
           <div className="blog-content">{parse(blogData?.content || "")}</div>
           {
             userData && (
-              <UserComments blogData={blogData} userData={userData}/>
+              <UserComments blogData={blogData} userData={userData} />
             )
           }
           
