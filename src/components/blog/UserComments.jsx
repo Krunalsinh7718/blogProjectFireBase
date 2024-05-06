@@ -14,7 +14,7 @@ function UserComments({ blogData, userData }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(blogData);
+    console.log("blog data props ",blogData);
   },[blogData])
 
   const handleCommentSubmit = async (e) => {
@@ -23,12 +23,13 @@ function UserComments({ blogData, userData }) {
 
     // console.log(blogData.comments);
     // console.log(userData.email, comment);
+    console.log("---data before new data added---",comments);
     if (blogData.comments) {
       // debugger;
       newBlogData = {
         ...blogData,
         comments: [
-          ...blogData.comments,
+          ...comments,
           { user: userData.email, comment: comment, id: getRandomNumber() },
         ],
       };
@@ -41,7 +42,7 @@ function UserComments({ blogData, userData }) {
         ],
       };
     }
-    console.log(newBlogData);
+    console.log("new blog data before send to update",newBlogData);
     const addBlogRes = await dbService.addUpdateBlog({...newBlogData})
     if (addBlogRes) {
       toast.success("Post added successfully.");
@@ -57,8 +58,9 @@ function UserComments({ blogData, userData }) {
     // debugger;
     if (allPosts) {
       await dispatch(setBlogs(allPosts));
-      const currentPost = allPosts.find(post => blogData.slug === post.slug);
-      const tempArr = [...currentPost.comments].reverse();
+      const currentPost = await allPosts.find(post => blogData.slug === post.slug);
+      // console.log("data after response", currentPost.comments);
+      const tempArr = [...currentPost.comments];
       setComments(tempArr);
     } else {
       toast.error("No post found");
@@ -93,10 +95,10 @@ function UserComments({ blogData, userData }) {
       </form>
       {comments && (
         <div className="comment-list">
-          {comments?.map((userComment) => (
-            <div className={`flex mb-4 w-full ${userComment.user === userData.email ? 'pl-4' : 'pr-4'}`} key={userComment.id}>
-              <div className={`flex w-full flex-col rounded-md border p-4 ${userComment.user === userData.email ? 'bg-gray-100' : 'bg-white'}`}>
-                <h6 className="font-semibold mb-2">{userComment.user}</h6>
+          {comments?.toReversed().map((userComment) => (
+            <div className={`flex mb-4 w-full ${userComment.user === userData.email ? 'pl-5' : 'pr-5'}`} key={userComment.id}>
+              <div className={`flex w-full flex-col rounded-md border px-4 py-3 ${userComment.user === userData.email ? 'bg-gray-100' : 'bg-white'}`}>
+                <h6 className="font-semibold mb-1">{userComment.user}</h6>
                 <p>
                 {userComment.comment}
                 </p>
