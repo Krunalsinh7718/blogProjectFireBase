@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dbService from "../../firebase/DatabaseServices";
 import { getRandomNumber } from "../../util/common-functions";
 import { toast } from "react-toastify";
@@ -13,6 +13,10 @@ function UserComments({ blogData, userData }) {
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    console.log(blogData);
+  },[blogData])
+
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     let newBlogData;
@@ -20,6 +24,7 @@ function UserComments({ blogData, userData }) {
     // console.log(blogData.comments);
     // console.log(userData.email, comment);
     if (blogData.comments) {
+      // debugger;
       newBlogData = {
         ...blogData,
         comments: [
@@ -28,6 +33,7 @@ function UserComments({ blogData, userData }) {
         ],
       };
     } else {
+      // debugger;
       newBlogData = {
         ...blogData,
         comments: [
@@ -35,10 +41,11 @@ function UserComments({ blogData, userData }) {
         ],
       };
     }
-    // console.log(newBlogData);
+    console.log(newBlogData);
     const addBlogRes = await dbService.addUpdateBlog({...newBlogData})
     if (addBlogRes) {
       toast.success("Post added successfully.");
+      // debugger;
       handleUpdatePost();
     } else {
       toast.error("Something went wrong");
@@ -47,11 +54,12 @@ function UserComments({ blogData, userData }) {
 
   const handleUpdatePost = async () => {
     const allPosts = await dbService.getAllPosts();
+    // debugger;
     if (allPosts) {
       await dispatch(setBlogs(allPosts));
-      const currentPost = allPosts.filter(post => blogData.slug === post.slug);
-      console.log(currentPost[0].comments);
-      setComments(currentPost[0].comments?.reverse());
+      const currentPost = allPosts.find(post => blogData.slug === post.slug);
+      const tempArr = [...currentPost.comments].reverse();
+      setComments(tempArr);
     } else {
       toast.error("No post found");
     }
@@ -60,7 +68,7 @@ function UserComments({ blogData, userData }) {
   return (
     <>
       <hr className="mb-4" />
-      <h4 className="text-2xl font-bold capitalize mb-5">{blogData.comments?.length} Total Comments</h4>
+      <h4 className="text-2xl font-bold capitalize mb-5">{blogData.comments?.length || 0} Total Comments</h4>
       <form onSubmit={handleCommentSubmit}>
         <div className="flex w-full items-center space-x-2 mb-8">
           <div className="flex-1">
